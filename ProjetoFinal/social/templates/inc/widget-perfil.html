@@ -1,0 +1,16 @@
+<div class="col-md-3"></div>
+<div class="col-md-3">
+    <h3 class="panel panel-heading">Alterar senha</h3>
+    <form action="{% url 'editar_perfil' %}" class="form-horizontal" method="post">
+        {% csrf_token %}
+        {% include 'form_base.html' %}
+
+        {% if form_editar.errors %}
+            <div class="alert alert-danger">
+                <button type="button" class="close"
+                        data-dismiss="alert" aria-hidden="true">×
+                </button>
+            </div>
+        {% endif %}
+    </form>
+</div>

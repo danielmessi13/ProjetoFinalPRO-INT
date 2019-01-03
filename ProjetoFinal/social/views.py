@@ -1,3 +1,7 @@
+from datetime import date
+
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -113,3 +117,47 @@ def rejeitar(request, id):
     convite = Convite.objects.get(id=id)
     convite.recusar()
     return redirect('home')
+
+
+@login_required
+def editar_perfil(request):
+    form_senha = PasswordChangeForm(user=request.user)
+
+    if request.method == 'POST':
+        form_editar = UsuarioForm(request.POST)
+        form_senha = PasswordChangeForm(user=request.user, data=request.POST)
+
+        if form_senha.is_valid():
+            form_senha.save()
+            update_session_auth_hash(request, form_senha.user)
+
+        if form_editar.is_valid():
+            dados_form = form_editar.cleaned_data
+            User.objects.update_or_create(username=dados_form['email'],
+                                          email=dados_form['email'])
+
+            del(form_editar.cleaned_data['email'])
+            perfil = Usuario(**form_editar.cleaned_data)
+
+            perfil.id = request.user.perfil.id
+            perfil.user = request.user
+
+            perfil.save()
+
+            return redirect('home')
+
+    else:
+        perfil = request.user.perfil.__dict__
+        user = {
+            'email': request.user.email
+        }
+        perfil.update(user)
+
+        form_editar = UsuarioForm(initial=perfil)
+
+    context = {
+        'form': form_senha,
+        'form_editar': form_editar,
+        'btn_name': 'Alterar'
+    }
+    return render(request, 'perfil.html', context)
