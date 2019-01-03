@@ -113,3 +113,11 @@ def rejeitar(request, id):
     convite = Convite.objects.get(id=id)
     convite.recusar()
     return redirect('home')
+
+@login_required
+def desfazer(request, id):
+    usuario = usuario_logado(request)
+    usuario.amigos.remove(id)
+    amigo = Usuario.objects.get(id=id)
+    amigo.amigos.remove(usuario.id)
+    return  redirect('convites')
