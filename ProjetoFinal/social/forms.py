@@ -15,17 +15,27 @@ class CadastroForm(forms.ModelForm):
         }
 
 
-class UsuarioForm(forms.ModelForm):
-    class Meta:
-        model = Usuario
-        fields = '__all__'
-        widgets = {
-            'nome': forms.TextInput(attrs={'class': "form-control"}),
-            'email': forms.TextInput(attrs={'class': "form-control"}),
-            'tipo': forms.Select(attrs={'class': "form-control"}),
-            'senha': forms.PasswordInput(attrs={'class': "form-control"}),
-            'foto': forms.FileInput(attrs={'class': "form-control"})
-        }
+class UsuarioForm(forms.Form):
+    nome = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Nome'}))
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Email'}))
+    telefone = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Telefone'}))
+    nome_empresa = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Nome da empresa'}))
+
+    def is_valid(self):
+        valid = True
+        if not super(UsuarioForm, self).is_valid():
+            self.adiciona_erro('Por favor, verifique os dados informados')
+            valid = False
+
+        return valid
+
+    def adiciona_erro(self, mensagem):
+        errors = self._errors.setdefault(forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList())
+        errors.append(mensagem)
+
+    # def __init__(self, *args, **kwargs):
+    #     super(UsuarioForm, self).__init__(*args, **kwargs)
+    #     self.initial['nome'] = 'Initial value'
 
 
 class PostagemForm(forms.ModelForm):
