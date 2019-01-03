@@ -161,3 +161,13 @@ def editar_perfil(request):
         'btn_name': 'Alterar'
     }
     return render(request, 'perfil.html', context)
+
+
+@login_required
+def desfazer(request, id):
+    usuario = usuario_logado(request)
+    usuario.amigos.remove(id)
+    amigo = Usuario.objects.get(id=id)
+    amigo.amigos.remove(usuario.id)
+    return  redirect('convites')
+
