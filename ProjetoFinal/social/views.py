@@ -97,7 +97,6 @@ def convites(request):
         "convites": convites,
         "amigos": amigos
     }
-    print(convites)
 
     return render(request, 'amigos.html', context)
 
