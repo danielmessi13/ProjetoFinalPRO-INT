@@ -5,10 +5,8 @@ from .views import *
 from usuarios.views import RegistrarUsuarioView
 from django.contrib.auth import views as v
 
-
-
 urlpatterns = [
-    path('', index, name='home'),
+    path('home', index, name='home'),
     path('postar', postar, name='postar'),
     path('postagem/<int:id>/editar', postar_editar, name='postagem_editar'),
     path('postagem/<int:id>/deletar', postar_deletar, name='postagem_deletar'),

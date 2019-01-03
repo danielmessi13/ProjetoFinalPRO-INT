@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Usuario(models.Model):
 
+    nome = models.CharField(max_length=128)
     telefone = models.CharField(max_length=20, null=False)
     nome_empresa = models.CharField(max_length=255, null=False)
     foto = models.ImageField(null=True)

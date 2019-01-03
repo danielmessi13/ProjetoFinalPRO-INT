@@ -8,13 +8,10 @@ from .forms import *
 
 # Create your views here.
 
+@login_required
 def index(request):
+    return render(request, 'home.html')
 
-    return render(request, 'a.html')
-
-
-def home(request):
-    return render(request,'a.html')
 
 @login_required
 def postar(request):
@@ -41,7 +38,7 @@ def postar(request):
             print(form.errors)
     return redirect('home_logado')
 
-
+@login_required
 def postar_editar(request, id):
     postagem = get_object_or_404(Postagem, id=id)
     if request.method == "POST":
@@ -54,13 +51,13 @@ def postar_editar(request, id):
             print(form.errors)
     return redirect('home_logado')
 
-
+@login_required
 def postar_deletar(request, id):
     postagem = Postagem.objects.get(id=id)
     print(postagem.delete())
     return redirect('home_logado')
 
-
+@login_required
 def pesquisar_amigo(request):
     pesquisa = request.GET['q']
     usuario = usuario_logado(request)
@@ -73,17 +70,18 @@ def pesquisar_amigo(request):
     }
     return render(request, 'pesquisa.html', context)
 
-
+@login_required
 def usuario_logado(request):
     return request.user.perfil
 
+@login_required
 def convidar(request, id):
     perfil_a_convidar = Usuario.objects.get(id=id)
     perfil_logado = usuario_logado(request)
     perfil_logado.convidar(perfil_a_convidar)
     return redirect('home_logado')
 
-
+@login_required
 def convites(request):
     usuario = usuario_logado(request)
     convites = usuario.convites_recebidos.all()
@@ -97,7 +95,7 @@ def convites(request):
 
     return render(request, 'amigos.html', context)
 
-
+@login_required
 def aceitar(request, id):
     convite = Convite.objects.get(id=id)
     convite.aceitar()

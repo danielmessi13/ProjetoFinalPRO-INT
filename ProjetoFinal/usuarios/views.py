@@ -16,13 +16,13 @@ class RegistrarUsuarioView(View):
         form = RegistrarUsuarioForm(request.POST)
         if form.is_valid():
             dados_form = form.cleaned_data
-            usuario = User.objects.create_user(username=dados_form['nome'],
-                                          email=dados_form['email'],
-                                          password=dados_form['senha'])
+            usuario = User.objects.create_user(username=dados_form['email'],
+                                               email=dados_form['email'],
+                                               password=dados_form['senha'])
 
-            Usuario.objects.create(telefone=dados_form['telefone'],
-                                           nome_empresa=dados_form['nome_empresa'],
-                                           usuario=usuario)
+            Usuario.objects.create(nome=dados_form['nome'], telefone=dados_form['telefone'],
+                                   nome_empresa=dados_form['nome_empresa'],
+                                   user=usuario)
 
             return redirect('login')
 
