@@ -44,3 +44,6 @@ class AnexoForm(forms.ModelForm):
         widgets = {
             'arquivo': forms.FileInput(attrs={'class': "form-control"}),
         }
+
+class EnviarForm(forms.Form):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Email'}))

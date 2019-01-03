@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 
 from .forms import *
 
@@ -121,3 +123,21 @@ def desfazer(request, id):
     amigo = Usuario.objects.get(id=id)
     amigo.amigos.remove(usuario.id)
     return  redirect('convites')
+
+def esqueceu(request):
+    if request.method == "POST":
+        form = EnviarForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            send_mail(
+                'Subject here',
+                'https://www.youtube.com/',
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+            )
+            print(request.POST["email"])
+
+        else:
+            print(form.errors)
+    return render(request, 'esqueceu.html')

@@ -27,3 +27,8 @@ class RegistrarUsuarioView(View):
             return redirect('login')
 
         return render(request, self.template_name, {'form': form})
+
+
+
+
+

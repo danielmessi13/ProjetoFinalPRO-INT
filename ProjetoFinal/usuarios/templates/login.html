@@ -23,6 +23,7 @@
         Por favor, verifique o Email e/ou Senha informados
     </div>
     {% endif %}
-    <a href="{% url 'cadastrar' %}">Registre-se</a>
+    <div><a href="{% url 'cadastrar' %}">Registre-se</a></div>
+    <div><a href="{% url 'esqueceu' %}">Esqueceu a senha?</a></div>
 </form>
 {% endblock %}
