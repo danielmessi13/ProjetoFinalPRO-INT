@@ -66,15 +66,15 @@
                         </form>
                     </div>
                 </div>
-                {% if usuario.timeline %}
-                {% for postagem in usuario.timeline %}
+                {% if request.user.perfil.timeline %}
+                {% for postagem in request.user.perfil.timeline %}
                 <div class="box box-widget">
                     <div class="box-header with-border">
                         <div class="user-block">
                             <img class="img-circle" src="{% static 'img/user.png' %}" alt="">
                             <span class="username"><a href="#">{{postagem.usuario.nome}}</a></span>
                             <span class="description">{{postagem.data}}</span>
-                           {% if postagem.usuario.id  == request.session.usuario_logado.id %}
+                           {% if postagem.usuario.id  == request.user.perfil.id %}
                             <span class="actions">
                                 <a class="text-danger action"
                                    param="{{postagem.id}}"

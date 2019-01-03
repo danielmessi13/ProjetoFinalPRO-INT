@@ -36,7 +36,8 @@ def postar(request):
                     print(anexo.errors)
         else:
             print(form.errors)
-    return redirect('home_logado')
+    return redirect('home')
+
 
 @login_required
 def postar_editar(request, id):
@@ -49,13 +50,15 @@ def postar_editar(request, id):
             model_instance.save()
         else:
             print(form.errors)
-    return redirect('home_logado')
+    return redirect('home')
+
 
 @login_required
 def postar_deletar(request, id):
     postagem = Postagem.objects.get(id=id)
     print(postagem.delete())
-    return redirect('home_logado')
+    return redirect('home')
+
 
 @login_required
 def pesquisar_amigo(request):
@@ -70,16 +73,19 @@ def pesquisar_amigo(request):
     }
     return render(request, 'pesquisa.html', context)
 
+
 @login_required
 def usuario_logado(request):
     return request.user.perfil
+
 
 @login_required
 def convidar(request, id):
     perfil_a_convidar = Usuario.objects.get(id=id)
     perfil_logado = usuario_logado(request)
     perfil_logado.convidar(perfil_a_convidar)
-    return redirect('home_logado')
+    return redirect('home')
+
 
 @login_required
 def convites(request):
@@ -95,9 +101,16 @@ def convites(request):
 
     return render(request, 'amigos.html', context)
 
+
 @login_required
 def aceitar(request, id):
     convite = Convite.objects.get(id=id)
     convite.aceitar()
-    return redirect('home_logado')
+    return redirect('home')
 
+
+@login_required
+def rejeitar(request, id):
+    convite = Convite.objects.get(id=id)
+    convite.recusar()
+    return redirect('home')

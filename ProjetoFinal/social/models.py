@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Usuario(models.Model):
-
     nome = models.CharField(max_length=128)
     telefone = models.CharField(max_length=20, null=False)
     nome_empresa = models.CharField(max_length=255, null=False)
@@ -22,11 +21,11 @@ class Usuario(models.Model):
         Convite.objects.create(convidado=perfil_convidado, solicitante=self)
 
     def timeline(self):
-        posts  = list(self.usuario_postagem.filter())
-        if self.amigos_usuario.all() :
+        posts = list(self.usuario_postagem.filter())
+        if self.amigos_usuario.all():
             for amigo in self.amigos_usuario.all():
                 posts += list(amigo.usuario_postagem.filter())
-        return sorted(chain(posts),key=lambda instance: instance.data, reverse=True)
+        return sorted(chain(posts), key=lambda instance: instance.data, reverse=True)
 
     def __str__(self):
         return self.user.username
@@ -69,7 +68,6 @@ class Mensagem(models.Model):
     lida = models.BooleanField(default=False)
 
 
-
 class Postagem(models.Model):
     texto = models.TextField()
     data = models.DateTimeField(default=timezone.now)
@@ -89,4 +87,7 @@ class Convite(models.Model):
     def aceitar(self):
         self.convidado.amigos.add(self.solicitante)
         self.solicitante.amigos.add(self.convidado)
+        self.delete()
+
+    def recusar(self):
         self.delete()

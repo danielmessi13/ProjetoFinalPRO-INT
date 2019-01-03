@@ -14,6 +14,7 @@ urlpatterns = [
     path('convidar/<int:id>', convidar, name='convidar'),
     path('amigos/convites', convites, name='convites'),
     path('amigos/convites/aceitar/<int:id>', aceitar, name='aceitar'),
+    path('amigos/convites/rejeitar/<int:id>', rejeitar, name='rejeitar'),
     path('cadastrar/', RegistrarUsuarioView.as_view(), name='cadastrar'),
     path('login/', v.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', v.LogoutView.as_view(template_name='login.html'), name='logout'),
