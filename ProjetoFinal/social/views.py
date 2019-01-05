@@ -136,9 +136,10 @@ def editar_perfil(request):
 
         if form_editar.is_valid():
             dados_form = form_editar.cleaned_data
-            User.objects.update_or_create(username=dados_form['email'],
-                                          email=dados_form['email'])
-
+            user = request.user
+            user.email = dados_form['email']
+            user.username = dados_form['email']
+            user.save()
             del(form_editar.cleaned_data['email'])
             perfil = Usuario(**form_editar.cleaned_data)
 
@@ -154,8 +155,8 @@ def editar_perfil(request):
         user = {
             'email': request.user.email
         }
-        perfil.update(user)
 
+        perfil.update(user)
         form_editar = UsuarioForm(initial=perfil)
 
     context = {

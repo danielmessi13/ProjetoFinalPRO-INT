@@ -1,4 +1,4 @@
-{% extends 'base_usuario.html' %}
+{% extends 'base.html' %}
 {% block body %}
 <form action="{% url 'cadastrar' %}" method="post" class="form-signin">
     {% csrf_token %}
@@ -23,7 +23,7 @@
     </div>
     {% endif %}
 
-    <a href="{% url 'login' %}">Já possuo uma conta</a>
+    <a class="btn btn-block btn-warning" href="{% url 'login' %}">Já possuo uma conta</a>
 
 </form>
 {% endblock %}

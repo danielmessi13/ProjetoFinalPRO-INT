@@ -4,9 +4,6 @@ from django.conf.urls.static import static
 from .views import *
 from usuarios.views import RegistrarUsuarioView
 from django.contrib.auth import views as v
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordResetDoneView, PasswordResetCompleteView
-
 
 urlpatterns = [
     path('home', index, name='home'),
@@ -24,11 +21,15 @@ urlpatterns = [
     path('esqueceu/', esqueceu, name='esqueceu'),
     path('login/', v.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', v.LogoutView.as_view(template_name='login.html'), name='logout'),
-    path('password_reset/$', PasswordResetView.as_view(template_name='password_reset_form.html'), name='password_reset'),
-    path('password_reset/done/$', PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),
+    path('password_reset/$', v.PasswordResetView.as_view(template_name='password_reset_form.html'),
+         name='password_reset'),
+    path('password_reset/done/$', v.PasswordResetDoneView.as_view(template_name='password_reset_done.html'),
+         name='password_reset_done'),
     path('reset/<uidb64>/<token>/$',
-        PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
-    path('reset/done/$', PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
+         v.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'),
+         name='password_reset_confirm'),
+    path('reset/done/$', v.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
+         name='password_reset_complete'),
 ]
 
 if settings.DEBUG:

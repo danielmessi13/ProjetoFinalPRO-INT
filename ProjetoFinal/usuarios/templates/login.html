@@ -1,29 +1,31 @@
-{% extends "base_usuario.html" %}
+{% extends "base.html" %}
 {% block body %}
-<form class="form-signin" role="form"
-      action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    <h2 class="form-signin-heading">Login</h2>
-    <input id="id_username" name="username"
-           class="form-control" placeholder="Email" required autofocus>
+    <form class="form-signin" role="form"
+          action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Login</h2>
+        <input id="id_username" name="username"
+               class="form-control" placeholder="Email" required autofocus>
 
-    <input type="password" id="id_password" name="password"
-           class="form-control" placeholder="Senha" required>
+        <input type="password" id="id_password" name="password"
+               class="form-control" placeholder="Senha" required>
 
-    <button class="btn btn-lg btn-primary btn-block"
-            type="submit" value="Login">Login
-    </button>
-
-    {% if form.errors %}
-    <div class="alert alert-danger">
-        <button type="button" class="close"
-                data-dismiss="alert" aria-hidden="true">×
+        <button class="btn btn-lg btn-primary btn-block"
+                type="submit" value="Login">Login
         </button>
 
-        Por favor, verifique o Email e/ou Senha informados
-    </div>
-    {% endif %}
-    <div><a href="{% url 'cadastrar' %}">Registre-se</a></div>
-    <div><a href="{% url 'password_reset' %}">Esqueceu a senha?</a></div>
-</form>
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <button type="button" class="close"
+                        data-dismiss="alert" aria-hidden="true">×
+                </button>
+
+                Por favor, verifique o Email e/ou Senha informados
+            </div>
+        {% endif %}
+        <a  href="{% url 'cadastrar' %}">Registre-se</a>
+        <a  style="margin-left: 100px;" href="{% url 'password_reset' %}">Esqueceu
+            a senha?</a>
+
+    </form>
 {% endblock %}

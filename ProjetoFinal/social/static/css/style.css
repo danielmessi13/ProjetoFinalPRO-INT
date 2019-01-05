@@ -1,54 +1,62 @@
-header{
+header {
     background-image: linear-gradient(#4B79A1, #283E51);
-	color:#fff;
-	min-height: 100px;
-	padding-top: 25px;
+    color: #fff;
+    min-height: 100px;
+    padding-top: 25px;
 }
 
 .panel-heading {
-	background-image: linear-gradient(#4B79A1, #283E51);
-	color: #fff !important;
+    background-image: linear-gradient(#4B79A1, #283E51);
+    color: #fff !important;
 }
 
-.navbar-brand{
-	margin: 0px;
-	transform: translateY(-30px);
-}
-.navbar-nav li a:hover{
-	background: transparent !important;
+.navbar-brand {
+    margin: 0px;
+    transform: translateY(-30px);
 }
 
-.navbar-nav li a:active{
-	background: #227f73 !important;
+.navbar-nav li a:hover {
+    background: transparent !important;
 }
 
-.navbar-nav li a:focus{
-	background: #227f73 !important;
-}
-.dropdown-menu{
-	background-image: linear-gradient(#4B79A1, #283E51);
-	color: #fff !important;
+.navbar-nav li a:active {
+    background: #227f73 !important;
 }
 
-
-.navbar-nav li a{
-	color: white;
+.navbar-nav li a:focus {
+    background: #227f73 !important;
 }
 
-.actions{
-	float: right;
-	transform: translateY(-35px);
+.dropdown-menu {
+    background-image: linear-gradient(#4B79A1, #283E51);
+    color: #fff !important;
 }
 
-footer{
-	background: #f4f4f4;
-	height: 90px;
-	color: #26A69A;
-	font-weight: bold;
-	text-align: center;
-	padding-top: 40px;
-	margin-top: 30px;
-	border-top: 7px solid #26A69A;
+
+.navbar-nav li a {
+    color: white;
+}
+
+.actions {
+    float: right;
+    transform: translateY(-35px);
+}
+
+body {
+    padding: 10px;
+    padding-bottom: 60px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: #f4f4f4;
+    color: #26A69A;
+    font-weight: bold;
+    text-align: center;
+    border-top: 7px solid #26A69A;
 }
 
 
