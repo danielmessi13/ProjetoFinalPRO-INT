@@ -18,6 +18,7 @@ class Usuario(models.Model):
     foto = models.ImageField(null=True)
     sexo = models.CharField(choices=SEXO_CHOICES, null=False, max_length=12)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
+    bloqueados = models.ManyToManyField('Usuario', related_name='usuarios_bloqueados')
     amigos = models.ManyToManyField('Usuario', related_name='amigos_usuario')
 
     @property
@@ -26,6 +27,10 @@ class Usuario(models.Model):
 
     def convidar(self, perfil_convidado):
         Convite.objects.create(convidado=perfil_convidado, solicitante=self)
+
+    def bloquear(self, perfil_a_bloquear):
+        self.bloqueados.add(perfil_a_bloquear)
+        perfil_a_bloquear.bloqueados.add(self)
 
     def timeline(self):
         posts = list(self.usuario_postagem.filter())

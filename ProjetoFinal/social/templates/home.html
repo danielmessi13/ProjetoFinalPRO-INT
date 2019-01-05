@@ -14,7 +14,7 @@
                         <form action="{% url 'postar' %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <textarea name="texto" required class="form-control input-lg p-text-area" rows="2"
-                                      placeholder="O que você tem em mente hoje?"></textarea>
+                                      placeholder="O que você está pensando hoje, {{ request.user.perfil.nome }}?"></textarea>
                             <input name="tipo" type="hidden" id="tipo_anexo" value="False">
                             <div class="modal fade" id="anexo" tabindex="-1" role="dialog"
                                  aria-labelledby="myModalLabel">
@@ -60,7 +60,6 @@
                                     </li>
                                     <li><a href="#" onclick="setTipo('I')" data-toggle="modal" data-target="#imagem"><i
                                             class="fa fa-camera"></i></a></li>
-                                    <li><a href="#"><i class=" fa fa-question"></i></a></li>
                                 </ul>
                             </div>
                         </form>
