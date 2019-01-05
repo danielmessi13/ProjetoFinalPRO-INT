@@ -1,6 +1,6 @@
-<div class="col-md-3"></div>
+<div class="col-md-1"></div>
 <div class="col-md-3">
-    <h3 class="panel panel-heading">Alterar senha</h3>
+    <h3 class="panel panel-heading" style="margin: 0;">Alterar senha</h3>
     <form action="{% url 'editar_perfil' %}" class="form-horizontal" method="post">
         {% csrf_token %}
         {% include 'form_base.html' %}

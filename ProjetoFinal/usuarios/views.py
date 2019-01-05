@@ -21,7 +21,6 @@ class RegistrarUsuarioView(View):
                                                password=dados_form['senha'])
 
             Usuario.objects.create(nome=dados_form['nome'], telefone=dados_form['telefone'],
-                                   nome_empresa=dados_form['nome_empresa'],
                                    user=usuario)
 
             return redirect('login')

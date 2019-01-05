@@ -16,10 +16,16 @@ class CadastroForm(forms.ModelForm):
 
 
 class UsuarioForm(forms.Form):
+    SEXO_CHOICES = (
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('O', 'Outros'),
+    )
+
     nome = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Nome'}))
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Email'}))
     telefone = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Telefone'}))
-    nome_empresa = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Nome da empresa'}))
+    sexo = forms.CharField(required=True, widget=forms.Select(choices=SEXO_CHOICES, attrs={'class': 'form-control'}))
 
     def is_valid(self):
         valid = True

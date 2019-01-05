@@ -6,10 +6,17 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Usuario(models.Model):
-    nome = models.CharField(max_length=128)
+
+    SEXO_CHOICES = (
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('O', 'Outros'),
+    )
+
+    nome = models.CharField(max_length=128, null=False)
     telefone = models.CharField(max_length=20, null=False)
-    nome_empresa = models.CharField(max_length=255, null=False)
     foto = models.ImageField(null=True)
+    sexo = models.CharField(choices=SEXO_CHOICES, null=False, max_length=12)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
     amigos = models.ManyToManyField('Usuario', related_name='amigos_usuario')
 

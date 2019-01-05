@@ -1,26 +1,12 @@
 <div class="col-md-4"></div>
 <div class="col-md-5">
-    <h3 class="panel panel-heading">Editar perfil</h3>
-    <form class="form-signin" role="form"
+    <h3 class="panel panel-heading" style="margin: 0;" >Editar perfil</h3>
+    <div class="panel panel-default" >
+        <div class="panel panel-body">
+            <form class="form-horizontal" role="form"
           action="{% url 'editar_perfil' %}" method="post">
         {% csrf_token %}
-
-            {% for field in form_editar %}
-                <div class="form-group col-lg-12">
-                    {{ field.errors }}
-
-                    {{ field }}
-                    {% if field.help_text %}
-                        <span class="help-block">{{ field.errors }}</span>
-                    {% endif %}
-                </div>
-            {% endfor %}
-
-
-
-        <button class="btn btn-lg btn-primary btn-block"
-                type="submit" value="Confirmar">Confirmar
-        </button>
+        {{ form_editar.as_p }}
 
         {% if form_editar.errors %}
             <div class="alert alert-danger">
@@ -29,6 +15,15 @@
                 </button>
             </div>
         {% endif %}
-
     </form>
+        </div>
+
+        <div class="panel panel-footer" >
+            <button class="btn btn-lg btn-primary btn-block"
+                type="submit" value="Editar">Editar
+        </button>
+        </div>
+
+    </div>
+
 </div>

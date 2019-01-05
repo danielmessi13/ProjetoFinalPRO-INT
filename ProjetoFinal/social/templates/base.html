@@ -29,31 +29,36 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand" href="{% url 'home' %}"> <img src="{% static 'img/logo.png' %}" class="logo" style="max-width: 60%; margin-left: 25%" alt=""></a>
+                <a class="navbar-brand" href="{% url 'home' %}"> <img src="{% static 'img/logo.png' %}" class="logo"
+                                                                      style="max-width: 60%; margin-left: 30%; margin-top: 3%"
+                                                                      alt=""></a>
             </div>
+            {% if request.user.perfil %}
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'convites' %}"><i class="fa fa-user-plus"></i></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">{{ request.user.perfil.nome }}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'editar_perfil' %}">Editar perfil</a></li>
+                                <li><a href="{% url 'logout' %}">Sair</a></li>
+                            </ul>
+                        </li>
+                    </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'convites' %}"><i class="fa fa-user-plus"></i></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">{{ request.user.perfil.nome}}<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{% url 'editar_perfil' %}">Editar perfil</a></li>
-                            <li><a href="{% url 'logout' %}">Sair</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                </div><!-- /.navbar-collapse -->
+            {% endif %}
 
-            </div><!-- /.navbar-collapse -->
 
         </div><!-- /.container-fluid -->
     </nav>
@@ -93,7 +98,9 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
