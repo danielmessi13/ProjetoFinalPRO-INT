@@ -1,0 +1,35 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block body%}
+
+<div class="col-md-1"></div>
+<div class="col-md-10">
+    <div class="panel panel-body">
+        <div class="panel panel-info">
+            <ul class="list-group">
+                {% if usuarios %}
+                {% for usuario in usuarios %}
+                <li class="list-group-item">
+                    {{usuario.nome}}
+                    {% if usuario.user.is_superuser %}
+                    <input class="pull-right " style="margin-left:5px" type="checkbox" disabled checked name="" id="1">
+                    <a href="{% url 'mudar' usuario.id %}" class="badge badge-primary badge-pill pull-right" style="background: #491217">Retirar
+                        super</a>
+                    {% else %}
+                    <input class="pull-right " style="margin-left:5px" type="checkbox" disabled name="" id="2">
+                    <a href="{% url 'mudar' usuario.id %}" class="badge badge-primary badge-pill pull-right" style="background: #491217">Tornar
+                        super</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+                {% else %}
+                <h2>Não há usuarios cadastrados :(</h2>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

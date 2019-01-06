@@ -197,20 +197,19 @@ def bloquear(request, id):
     return desfazer(request, bloquear.id)
 
 
-def esqueceu(request):
-    if request.method == "POST":
-        form = EnviarForm(request.POST)
-        if form.is_valid():
-            email = request.POST['email']
-            send_mail(
-                'Subject here',
-                'https://www.youtube.com/',
-                settings.EMAIL_HOST_USER,
-                [email],
-                fail_silently=False,
-            )
-            print(request.POST["email"])
+@login_required
+def listar_usuario(request):
+    if not request.user.is_superuser:
+        return render(request, 'forbidden.html')
+    usuarios = Usuario.objects.all().exclude(user=request.user)
+    return render(request, 'listar_usuarios.html',{'usuarios': usuarios})
+@login_required
+def super_mudanca(request, id):
+    usuario = Usuario.objects.get(id=id)
+    if usuario.user.is_superuser:
+        usuario.user.is_superuser = False
+    else:
+        usuario.user.is_superuser = True
+    usuario.user.save()
 
-        else:
-            print(form.errors)
-    return render(request, 'esqueceu.html')
+    return redirect('listar')

@@ -52,6 +52,9 @@
                                aria-expanded="false">{{ request.user.perfil.nome }}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'editar_perfil' %}">Editar perfil</a></li>
+                                {% if request.user.is_superuser %}
+                                <li><a href="{% url 'listar' %}">Listar usuarios </a></li>
+                                {% endif %}
                                 <li><a href="{% url 'logout' %}">Sair</a></li>
                             </ul>
                         </li>
@@ -92,7 +95,7 @@
 
 <footer>
     <div class="container">
-        <p>Fakebook Copyright &copy, 2018</p>
+        <p>Fakebook Copyright &copy, 2019</p>
     </div>
 </footer>
 
