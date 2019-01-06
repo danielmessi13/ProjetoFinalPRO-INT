@@ -23,7 +23,7 @@ class Usuario(models.Model):
 
     @property
     def email(self):
-        return self.usuario.email
+        return self.user.email
 
     def convidar(self, perfil_convidado):
         Convite.objects.create(convidado=perfil_convidado, solicitante=self)

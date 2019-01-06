@@ -15,7 +15,7 @@
                                 {% if resultado %}
                                     {% for amigo in resultado %}
                                         <li class="list-group-item">{{ amigo.nome }}
-                                            <a href="{% url 'convidar' amigo.id %}"
+                                            <a href="{% url 'bloquear' amigo.id %}"
                                                class="badge" style="background: #93291E">Bloquear</a>
                                             <a
                                                     href="{% url 'convidar' amigo.id %}"

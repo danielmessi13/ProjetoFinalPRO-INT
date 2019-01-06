@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from datetime import date
 
@@ -71,7 +70,19 @@ def postar_deletar(request, id):
 def pesquisar_amigo(request):
     pesquisa = request.GET['q']
     usuario = usuario_logado(request)
-    resultado = Usuario.objects.filter(nome__contains=pesquisa).exclude(nome=usuario).exclude(amigos=usuario)
+
+    resultado = Usuario \
+        .objects \
+        .filter(nome__contains=pesquisa) \
+        .exclude(nome=usuario.nome) \
+        .exclude(amigos=usuario)
+
+    convites = Convite.objects.filter(solicitante=usuario, convidado__in=resultado)
+
+    resultado = resultado.filter(bloqueados__in=usuario.bloqueados.all())
+
+    if convites:
+        resultado = resultado.exclude(nome=convites.all()[0].convidado.nome)
 
     context = {
         "usuario": usuario_logado(request),
@@ -140,7 +151,7 @@ def editar_perfil(request):
             user.email = dados_form['email']
             user.username = dados_form['email']
             user.save()
-            del(form_editar.cleaned_data['email'])
+            del (form_editar.cleaned_data['email'])
             perfil = Usuario(**form_editar.cleaned_data)
 
             perfil.id = request.user.perfil.id
@@ -149,6 +160,7 @@ def editar_perfil(request):
             perfil.save()
 
             return redirect('home')
+
 
     else:
         perfil = request.user.perfil.__dict__
@@ -173,7 +185,16 @@ def desfazer(request, id):
     usuario.amigos.remove(id)
     amigo = Usuario.objects.get(id=id)
     amigo.amigos.remove(usuario.id)
-    return  redirect('convites')
+    return redirect('convites')
+
+
+@login_required
+def bloquear(request, id):
+    bloquear = Usuario.objects.get(id=id)
+    usuario = usuario_logado(request)
+    usuario.bloquear(bloquear)
+
+    return desfazer(request, bloquear.id)
 
 
 def esqueceu(request):
@@ -193,4 +214,3 @@ def esqueceu(request):
         else:
             print(form.errors)
     return render(request, 'esqueceu.html')
-

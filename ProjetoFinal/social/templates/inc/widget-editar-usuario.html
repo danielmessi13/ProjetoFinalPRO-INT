@@ -1,12 +1,16 @@
 <div class="col-md-4"></div>
 <div class="col-md-5">
-    <h3 class="panel panel-heading" style="margin: 0;" >Editar perfil</h3>
-    <div class="panel panel-default" >
+    <h3 class="panel panel-heading" style="margin-top: 0">Editar perfil</h3>
+    <div class="panel panel-default">
         <div class="panel panel-body">
             <form class="form-horizontal" role="form"
           action="{% url 'editar_perfil' %}" method="post">
         {% csrf_token %}
         {{ form_editar.as_p }}
+
+        <button class="btn btn-lg btn-primary btn-block"
+                type="submit" value="Editar">Editar
+        </button>
 
         {% if form_editar.errors %}
             <div class="alert alert-danger">
@@ -15,13 +19,8 @@
                 </button>
             </div>
         {% endif %}
-    </form>
-        </div>
 
-        <div class="panel panel-footer" >
-            <button class="btn btn-lg btn-primary btn-block"
-                type="submit" value="Editar">Editar
-        </button>
+    </form>
         </div>
 
     </div>
