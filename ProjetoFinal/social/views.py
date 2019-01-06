@@ -144,6 +144,7 @@ def editar_perfil(request):
         if form_senha.is_valid():
             form_senha.save()
             update_session_auth_hash(request, form_senha.user)
+            return redirect('editar_perfil')
 
         if form_editar.is_valid():
             dados_form = form_editar.cleaned_data
@@ -159,7 +160,7 @@ def editar_perfil(request):
 
             perfil.save()
 
-            return redirect('home')
+            return redirect('editar_perfil')
 
 
     else:
