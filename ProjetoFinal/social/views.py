@@ -1,6 +1,6 @@
 from django.conf import settings
 from datetime import date
-
+from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
@@ -140,6 +140,7 @@ def editar_perfil(request):
     if request.method == 'POST':
         form_editar = UsuarioForm(request.POST)
         form_senha = PasswordChangeForm(user=request.user, data=request.POST)
+        form_foto = FotoForm(request.POST, request.FILES)
 
         if form_senha.is_valid():
             form_senha.save()
@@ -162,8 +163,16 @@ def editar_perfil(request):
 
             return redirect('editar_perfil')
 
+        if form_foto.is_valid():
+            print(form_foto.cleaned_data['foto'])
+            request.user.perfil.foto = form_foto.cleaned_data['foto']
+            request.user.perfil.save()
+            form_foto.save(commit=False)
+
+            return redirect('home')
 
     else:
+        form_foto = FotoForm()
         perfil = request.user.perfil.__dict__
         user = {
             'email': request.user.email
@@ -175,6 +184,7 @@ def editar_perfil(request):
     context = {
         'form': form_senha,
         'form_editar': form_editar,
+        'form_foto': form_foto,
         'btn_name': 'Alterar'
     }
     return render(request, 'perfil.html', context)
@@ -197,13 +207,22 @@ def bloquear(request, id):
 
     return desfazer(request, bloquear.id)
 
+@login_required
+def desbloquear(request, id):
+    bloqueado = Usuario.objects.get(id=id)
+    usuario = usuario_logado(request)
+    usuario.desbloquear(bloqueado)
+
+    return redirect('convites')
 
 @login_required
 def listar_usuario(request):
     if not request.user.is_superuser:
         return render(request, 'forbidden.html')
     usuarios = Usuario.objects.all().exclude(user=request.user)
-    return render(request, 'listar_usuarios.html',{'usuarios': usuarios})
+    return render(request, 'listar_usuarios.html', {'usuarios': usuarios})
+
+
 @login_required
 def super_mudanca(request, id):
     usuario = Usuario.objects.get(id=id)

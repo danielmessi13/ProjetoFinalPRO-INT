@@ -70,7 +70,7 @@
                 <div class="box box-widget">
                     <div class="box-header with-border">
                         <div class="user-block">
-                            <img class="img-circle" src="{% static 'img/user.png' %}" alt="">
+                            <img class="img-circle" src="{{ request.user.perfil.foto.url }}" alt="">
                             <span class="username"><a href="#">{{postagem.usuario.nome}}</a></span>
                             <span class="description">{{postagem.data}}</span>
                            {% if postagem.usuario.id  == request.user.perfil.id %}
@@ -88,11 +88,11 @@
                         {% if postagem.anexo_postagem %}
                         {% for anexo in postagem.anexo_postagem.all %}
                         {% if anexo.tipo == 'P' %}
-                        <p><a target="_blank" href="media/{{anexo.arquivo}}"><i class="fa fa-file-pdf"></i> Anexo</a>
+                        <p><a target="_blank" href="{{anexo.arquivo.url}}"><i class="fa fa-file-pdf"></i> Anexo</a>
                         </p>
                         {% elif anexo.tipo == 'I'%}
                         <img class="img-responsive show-in-modal"
-                             src="media/{{anexo.arquivo}}"
+                             src="{{anexo.arquivo.url}}"
                              alt="Photo">
                         {% endif %}
                         {% endfor %}

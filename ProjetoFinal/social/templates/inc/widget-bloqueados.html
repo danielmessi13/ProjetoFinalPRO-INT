@@ -1,12 +1,15 @@
 {% load static %}
-<div class="panel panel-default friends">
-
+<div class="panel panel-default friends" style="height: 150px">
     <div class="panel-heading">
         <h3 class="panel-title">Amigos bloqueados</h3>
     </div>
-    <div class="list-group">
+
+    <ul class="list-group" style=" overflow-y: scroll; height: 73%" >
         {% for bloqueado in request.user.perfil.bloqueados.all %}
-        <a href="#" class="list-group-item list-group-item-action">{{ bloqueado }}</a>
+            <li class="list-group-item">
+                <span class="">{{ bloqueado.nome }} </span>
+                <a href="{% url 'desbloquear' bloqueado.id %}" class="badge" style="background: #93291E; float: right">Desbloquear</a>
+            </li>
         {% endfor %}
-    </div>
+    </ul>
 </div>

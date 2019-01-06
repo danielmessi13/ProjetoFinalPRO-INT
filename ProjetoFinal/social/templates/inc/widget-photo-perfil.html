@@ -1,0 +1,36 @@
+{% load static %}
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="col-md-1"></div>
+<div class="col-md-3">
+
+    <div class="card">
+        <img src="{{ request.user.perfil.foto.url }}" alt="user_photo" style="width:100%">
+        <h1>{{ request.user.perfil.nome }}</h1>
+
+        <p>
+            <button class="btn btn-info btn-block" data-toggle="modal" data-target="#foto">Alterar foto</button>
+        </p>
+    </div>
+
+    <div class="modal fade" id="foto" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Anexar Foto</h4>
+                </div>
+
+
+                <div class="panel panel-body">
+                    <form method="post" action="{% url 'editar_perfil' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form_foto.as_p }}
+                        <button class="btn btn-primary pull-right" type="submit">Alterar</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,7 @@ urlpatterns = [
     path('pesquisar/amigo', pesquisar_amigo, name='pesquisar_amigo'),
     path('convidar/<int:id>', convidar, name='convidar'),
     path('bloquear/<int:id>', bloquear, name='bloquear'),
+    path('desbloquear/<int:id>', desbloquear, name='desbloquear'),
     path('amigos/convites', convites, name='convites'),
     path('amigos/convites/aceitar/<int:id>', aceitar, name='aceitar'),
     path('amigos/convites/rejeitar/<int:id>', rejeitar, name='rejeitar'),

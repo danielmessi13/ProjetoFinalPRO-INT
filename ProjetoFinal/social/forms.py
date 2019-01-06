@@ -22,9 +22,12 @@ class UsuarioForm(forms.Form):
         ('O', 'Outros'),
     )
 
-    nome = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Nome'}))
-    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Email'}))
-    telefone = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Telefone'}))
+    nome = forms.CharField(required=True,
+                           widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome'}))
+    email = forms.EmailField(required=True,
+                             widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
+    telefone = forms.CharField(required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telefone'}))
     sexo = forms.CharField(required=True, widget=forms.Select(choices=SEXO_CHOICES, attrs={'class': 'form-control'}))
 
     def is_valid(self):
@@ -53,6 +56,15 @@ class PostagemForm(forms.ModelForm):
         }
 
 
+class FotoForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ["foto"]
+        widgets = {
+            'foto': forms.FileInput(attrs={'class': "form-control"}),
+        }
+
+
 class AnexoForm(forms.ModelForm):
     class Meta:
         model = Anexo
@@ -61,5 +73,7 @@ class AnexoForm(forms.ModelForm):
             'arquivo': forms.FileInput(attrs={'class': "form-control"}),
         }
 
+
 class EnviarForm(forms.Form):
-    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Email'}))
+    email = forms.EmailField(required=True,
+                             widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
