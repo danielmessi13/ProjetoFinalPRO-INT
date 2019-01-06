@@ -79,7 +79,7 @@ def pesquisar_amigo(request):
 
     convites = Convite.objects.filter(solicitante=usuario, convidado__in=resultado)
 
-    resultado = resultado.filter(bloqueados__in=usuario.bloqueados.all())
+    # resultado = resultado.filter(bloqueados__in=usuario.bloqueados.all())
 
     if convites:
         resultado = resultado.exclude(nome=convites.all()[0].convidado.nome)
