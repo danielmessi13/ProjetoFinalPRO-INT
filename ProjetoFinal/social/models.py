@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Usuario(models.Model):
-
     SEXO_CHOICES = (
         ('M', 'Masculino'),
         ('F', 'Feminino'),
@@ -28,13 +27,12 @@ class Usuario(models.Model):
     def convidar(self, perfil_convidado):
         Convite.objects.create(convidado=perfil_convidado, solicitante=self)
 
-    def bloquear(self, perfil_a_bloquear):
-        self.bloqueados.add(perfil_a_bloquear)
-        perfil_a_bloquear.bloqueados.add(self)
+    def bloquear(self, bloqueado):
+        Bloqueio.objects.create(bloqueador=self, bloqueado=bloqueado)
 
-    def desbloquear(self, perfil_a_desbloquear):
-        self.bloqueados.remove(perfil_a_desbloquear)
-        perfil_a_desbloquear.bloqueados.remove(self)
+    def desbloquear(self, bloqueado):
+        bloqueado = Bloqueio.objects.get(bloqueado=bloqueado)
+        bloqueado.desbloquear(bloqueado)
 
     def timeline(self):
         posts = list(self.usuario_postagem.filter())
@@ -107,3 +105,14 @@ class Convite(models.Model):
 
     def recusar(self):
         self.delete()
+
+
+class Bloqueio(models.Model):
+    bloqueador = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='bloqueios_recebidos')
+    bloqueado = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='bloqueios_feitos')
+
+    def bloquear(self, perfil_a_bloquear):
+        self.bloqueador.bloqueados.add(perfil_a_bloquear)
+
+    def desbloquear(self, perfil_a_desbloquear):
+        self.bloqueador.remove(perfil_a_desbloquear)

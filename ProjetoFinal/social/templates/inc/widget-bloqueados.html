@@ -5,9 +5,10 @@
     </div>
 
     <ul class="list-group" style=" overflow-y: scroll; height: 73%" >
-        {% for bloqueado in request.user.perfil.bloqueados.all %}
+        {% for bloqueado in request.user.perfil.bloqueios_feitos.all %}
+
             <li class="list-group-item">
-                <span class="">{{ bloqueado.nome }} </span>
+                <span class="">{{ bloqueado.bloqueado.nome }} </span>
                 <a href="{% url 'desbloquear' bloqueado.id %}" class="badge" style="background: #93291E; float: right">Desbloquear</a>
             </li>
         {% endfor %}

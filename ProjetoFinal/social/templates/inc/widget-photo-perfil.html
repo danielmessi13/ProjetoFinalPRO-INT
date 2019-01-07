@@ -25,7 +25,9 @@
                 <div class="panel panel-body">
                     <form method="post" action="{% url 'editar_perfil' %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form_foto.as_p }}
+                        <div class="modal-body">
+                            <input type="file" name="foto" class="form-control">
+                        </div>
                         <button class="btn btn-primary pull-right" type="submit">Alterar</button>
                     </form>
 
@@ -34,3 +36,6 @@
         </div>
     </div>
 </div>
+
+
+

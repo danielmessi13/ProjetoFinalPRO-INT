@@ -79,7 +79,7 @@ def pesquisar_amigo(request):
 
     convites = Convite.objects.filter(solicitante=usuario, convidado__in=resultado)
 
-    # resultado = resultado.filter(bloqueados__in=usuario.bloqueados.all())
+    # resultado = resultado.exclude(bloqueados=usuario.bloqueados.all())
 
     if convites:
         resultado = resultado.exclude(nome=convites.all()[0].convidado.nome)
@@ -113,7 +113,7 @@ def convites(request):
 
     context = {
         "convites": convites,
-        "amigos": amigos
+        "amigos": amigos,
     }
 
     return render(request, 'amigos.html', context)
@@ -164,7 +164,6 @@ def editar_perfil(request):
             return redirect('editar_perfil')
 
         if form_foto.is_valid():
-            print(form_foto.cleaned_data['foto'])
             request.user.perfil.foto = form_foto.cleaned_data['foto']
             request.user.perfil.save()
             form_foto.save(commit=False)
@@ -172,7 +171,7 @@ def editar_perfil(request):
             return redirect('home')
 
     else:
-        form_foto = FotoForm()
+
         perfil = request.user.perfil.__dict__
         user = {
             'email': request.user.email
@@ -180,6 +179,8 @@ def editar_perfil(request):
 
         perfil.update(user)
         form_editar = UsuarioForm(initial=perfil)
+
+        form_foto = FotoForm(initial={'foto': request.user.perfil.foto})
 
     context = {
         'form': form_senha,
@@ -207,6 +208,7 @@ def bloquear(request, id):
 
     return desfazer(request, bloquear.id)
 
+
 @login_required
 def desbloquear(request, id):
     bloqueado = Usuario.objects.get(id=id)
@@ -214,6 +216,7 @@ def desbloquear(request, id):
     usuario.desbloquear(bloqueado)
 
     return redirect('convites')
+
 
 @login_required
 def listar_usuario(request):
