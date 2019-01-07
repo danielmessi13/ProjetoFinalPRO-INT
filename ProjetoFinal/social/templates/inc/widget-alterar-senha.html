@@ -1,17 +1,18 @@
 
-<div class="col-md-3">
-    <h3 class="panel panel-heading" style="margin: 0;">Alterar senha</h3>
-    <form action="{% url 'editar_perfil' %}" class="form-horizontal" method="post">
+<div class="col-md-9">
+
+    <form action="{% url 'alterar_senha' %}" class="form-horizontal" method="post">
         {% csrf_token %}
         {% include 'form_base.html' %}
         {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li
-                            {% if message.tags %}
-                                class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
+        <ul class="messages">
+            {% for message in messages %}
+            <li
+                    {% if message.tags %}
+                    class="{{ message.tags }}" {% endif %}>{{ message }}
+            </li>
+            {% endfor %}
+        </ul>
         {% endif %}
     </form>
 </div>

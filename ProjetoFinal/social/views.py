@@ -135,17 +135,11 @@ def rejeitar(request, id):
 
 @login_required
 def editar_perfil(request):
-    form_senha = PasswordChangeForm(user=request.user)
 
     if request.method == 'POST':
         form_editar = UsuarioForm(request.POST)
-        form_senha = PasswordChangeForm(user=request.user, data=request.POST)
         form_foto = FotoForm(request.POST, request.FILES)
 
-        if form_senha.is_valid():
-            form_senha.save()
-            update_session_auth_hash(request, form_senha.user)
-            return redirect('editar_perfil')
 
         if form_editar.is_valid():
             dados_form = form_editar.cleaned_data
@@ -154,6 +148,7 @@ def editar_perfil(request):
             user.username = dados_form['email']
             user.save()
             del (form_editar.cleaned_data['email'])
+            form_editar.cleaned_data['foto'] = request.user.perfil.foto
             perfil = Usuario(**form_editar.cleaned_data)
 
             perfil.id = request.user.perfil.id
@@ -165,11 +160,11 @@ def editar_perfil(request):
 
         if form_foto.is_valid():
             print(form_foto.cleaned_data['foto'])
-            request.user.perfil.foto = form_foto.cleaned_data['foto']
+            request.user.perfil.foto = form_foto    .cleaned_data['foto']
             request.user.perfil.save()
             form_foto.save(commit=False)
 
-            return redirect('home')
+            return redirect('editar_perfil')
 
     else:
         form_foto = FotoForm()
@@ -182,12 +177,30 @@ def editar_perfil(request):
         form_editar = UsuarioForm(initial=perfil)
 
     context = {
-        'form': form_senha,
         'form_editar': form_editar,
         'form_foto': form_foto,
         'btn_name': 'Alterar'
     }
     return render(request, 'perfil.html', context)
+
+@login_required
+def alterar_senha(request):
+    form_senha = PasswordChangeForm(user=request.user)
+
+    if request.method == 'POST':
+        form_senha = PasswordChangeForm(user=request.user, data=request.POST)
+
+        if form_senha.is_valid():
+            form_senha.save()
+            update_session_auth_hash(request, form_senha.user)
+            return redirect('alterar_senha')
+
+
+    context = {
+        'form': form_senha,
+        'btn_name': 'Alterar'
+    }
+    return render(request, 'alterar_senha.html', context)
 
 
 @login_required

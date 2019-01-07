@@ -1,15 +1,15 @@
 {% load static %}
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div class="col-md-1"></div>
+<div class="col-md-0"></div>
 <div class="col-md-3">
 
     <div class="card">
-        <img src="{{ request.user.perfil.foto.url }}" alt="user_photo" style="width:100%">
-        <h1>{{ request.user.perfil.nome }}</h1>
+        <img src="{{ request.user.perfil.foto.url }}" alt="user_photo" style="min-width: 100%; min-height: 250px;" class="avatar img-circle img-responsive">
 
         <p>
-            <button class="btn btn-info btn-block" data-toggle="modal" data-target="#foto">Alterar foto</button>
+
+            <button class="btn btn-info btn-block btn-lg" data-toggle="modal" data-target="#foto">Alterar foto</button>
         </p>
     </div>
 
@@ -19,6 +19,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Anexar Foto</h4>
+
                 </div>
 
 

@@ -18,6 +18,7 @@ urlpatterns = [
     path('amigos/convites/aceitar/<int:id>', aceitar, name='aceitar'),
     path('amigos/convites/rejeitar/<int:id>', rejeitar, name='rejeitar'),
     path('perfil/', editar_perfil, name='editar_perfil'),
+    path('perfil/alterar_senha/', alterar_senha, name='alterar_senha'),
     path('amigos/convites/desfazer/<int:id>', desfazer, name='desfazer'),
     path('cadastrar/', RegistrarUsuarioView.as_view(), name='cadastrar'),
     path('listar/', listar_usuario, name='listar'),
