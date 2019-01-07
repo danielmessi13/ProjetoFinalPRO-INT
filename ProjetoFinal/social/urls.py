@@ -7,6 +7,7 @@ from django.contrib.auth import views as v
 
 urlpatterns = [
     path('home/', index, name='home'),
+    path('', index, name='home'),
     path('postar/', postar, name='postar'),
     path('postagem/<int:id>/editar', postar_editar, name='postagem_editar'),
     path('postagem/<int:id>/deletar', postar_deletar, name='postagem_deletar'),
@@ -15,6 +16,7 @@ urlpatterns = [
     path('bloquear/<int:id>', bloquear, name='bloquear'),
     path('desbloquear/<int:id>', desbloquear, name='desbloquear'),
     path('amigos/convites', convites, name='convites'),
+    path('amigos/convites/cancelar/<int:id>', cancelar_convite, name='cancelar_convite'),
     path('amigos/convites/aceitar/<int:id>', aceitar, name='aceitar'),
     path('amigos/convites/rejeitar/<int:id>', rejeitar, name='rejeitar'),
     path('perfil/', editar_perfil, name='editar_perfil'),

@@ -75,7 +75,7 @@ def pesquisar_amigo(request):
         .objects \
         .filter(nome__contains=pesquisa) \
         .exclude(nome=usuario.nome) \
-        .exclude(amigos=usuario)
+        .exclude(amigos__in=[usuario])
 
     convites = Convite.objects.filter(solicitante=usuario, convidado__in=resultado)
 
@@ -132,6 +132,12 @@ def rejeitar(request, id):
     convite.recusar()
     return redirect('home')
 
+@login_required
+def cancelar_convite(request,id):
+    convite = Convite.objects.get(id=id)
+    convite.delete()
+
+    return redirect('convites')
 
 @login_required
 def editar_perfil(request):

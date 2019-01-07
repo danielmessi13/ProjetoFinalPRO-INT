@@ -1,0 +1,15 @@
+{% load static %}
+<div class="panel panel-default friends" style="height: 150px">
+    <div class="panel-heading">
+        <h3 class="panel-title">Convites feitos</h3>
+    </div>
+
+    <ul class="list-group" style=" overflow-y: scroll; height: 73%" >
+        {% for convite in request.user.perfil.convites_feitos.all %}
+            <li class="list-group-item">
+                <span class="">{{ convite.convidado.nome }} </span>
+                <a href="{% url 'cancelar_convite' convite.id %}" class="badge" style="background: #93291E; float: right">Cancelar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
