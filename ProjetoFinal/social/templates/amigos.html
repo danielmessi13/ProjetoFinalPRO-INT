@@ -39,7 +39,8 @@
                         <ul class="list-group">
                             {% if amigos %}
                                 {% for amigo in amigos %}
-                                    <li class="list-group-item">{{amigo.nome}}
+                                    <li class="list-group-item">
+                                        <a href="{% url 'perfil_usuario' amigo.id %}">{{amigo.nome}}</a>
                                         <a href="{% url 'bloquear' amigo.id %}" class="badge badge-primary badge-pill" style="background: #491217">Bloquear</a>
                                         <a href="{% url 'desfazer' amigo.id %}" class="badge badge-primary badge-pill" style="background: #93291E">Desfazer amizade</a>
                                     </li>

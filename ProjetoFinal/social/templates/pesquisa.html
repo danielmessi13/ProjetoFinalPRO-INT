@@ -14,12 +14,14 @@
                             <ul class="list-group">
                                 {% if resultado %}
                                     {% for amigo in resultado %}
-                                        <li class="list-group-item">{{ amigo.nome }}
-                                            <a href="{% url 'bloquear' amigo.id %}"
-                                               class="badge" style="background: #93291E">Bloquear</a>
-                                            <a
-                                                    href="{% url 'convidar' amigo.id %}"
-                                                    class="badge" style="background: #4B79A1">Convidar</a>
+                                        <li class="list-group-item" style="height: 60px;">
+                                            <div class="user-block">
+                                                <img src="{{ amigo.foto.url }}" class="img-circle">
+                                                <a
+                                                        href="{% url 'perfil_usuario' amigo.id %}"
+                                                        class="">{{ amigo.nome }}</a>
+                                            </div>
+
                                         </li>
 
                                     {% endfor %}

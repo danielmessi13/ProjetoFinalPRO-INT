@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import *
 
@@ -16,7 +17,7 @@ from .forms import *
 
 @login_required
 def index(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html' , {'usuario': usuario_logado(request)})
 
 
 @login_required
@@ -132,20 +133,48 @@ def rejeitar(request, id):
     convite.recusar()
     return redirect('home')
 
+
 @login_required
-def cancelar_convite(request,id):
-    convite = Convite.objects.get(id=id)
+def cancelar_convite(request, id):
+    try:
+        convite = Convite.objects.get(id=id)
+
+    except ObjectDoesNotExist:
+
+        usuario = Usuario.objects.get(id=id)
+        convite = Convite.objects.get(convidado=usuario, solicitante=request.user.perfil)
+
     convite.delete()
 
     return redirect('convites')
 
+
+@login_required
+def perfil_usuario(request, id):
+
+    amigo = False
+    convidado = False
+
+    usuario = Usuario.objects.get(id=id)
+    if usuario.amigos.filter(nome=request.user.perfil.nome):
+        amigo = True
+    if usuario.convites_recebidos.filter(solicitante=request.user.perfil):
+        convidado = True
+
+    context = {
+        'perfil': True,
+        'usuario': usuario,
+        'amigo' : amigo,
+        'convidado': convidado,
+    }
+    return render(request, 'perfil_usuario.html', context)
+
+
 @login_required
 def editar_perfil(request):
-
     if request.method == 'POST':
         form_editar = UsuarioForm(request.POST)
         form_foto = FotoForm(request.POST, request.FILES)
-
 
         if form_editar.is_valid():
             dados_form = form_editar.cleaned_data
@@ -166,7 +195,7 @@ def editar_perfil(request):
 
         if form_foto.is_valid():
             print(form_foto.cleaned_data['foto'])
-            request.user.perfil.foto = form_foto    .cleaned_data['foto']
+            request.user.perfil.foto = form_foto.cleaned_data['foto']
             request.user.perfil.save()
             form_foto.save(commit=False)
 
@@ -189,6 +218,7 @@ def editar_perfil(request):
     }
     return render(request, 'perfil.html', context)
 
+
 @login_required
 def alterar_senha(request):
     form_senha = PasswordChangeForm(user=request.user)
@@ -200,7 +230,6 @@ def alterar_senha(request):
             form_senha.save()
             update_session_auth_hash(request, form_senha.user)
             return redirect('alterar_senha')
-
 
     context = {
         'form': form_senha,
@@ -215,7 +244,7 @@ def desfazer(request, id):
     usuario.amigos.remove(id)
     amigo = Usuario.objects.get(id=id)
     amigo.amigos.remove(usuario.id)
-    return redirect('convites')
+    return redirect('home')
 
 
 @login_required
@@ -226,6 +255,7 @@ def bloquear(request, id):
 
     return desfazer(request, bloquear.id)
 
+
 @login_required
 def desbloquear(request, id):
     bloqueado = Usuario.objects.get(id=id)
@@ -233,6 +263,7 @@ def desbloquear(request, id):
     usuario.desbloquear(bloqueado)
 
     return redirect('convites')
+
 
 @login_required
 def listar_usuario(request):

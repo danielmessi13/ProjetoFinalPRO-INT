@@ -53,7 +53,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'editar_perfil' %}">Editar perfil</a></li>
                                 {% if request.user.is_superuser %}
-                                <li><a href="{% url 'listar' %}">Listar usuarios </a></li>
+                                    <li><a href="{% url 'listar' %}">Listar usuarios </a></li>
                                 {% endif %}
                                 <li><a href="{% url 'logout' %}">Sair</a></li>
                             </ul>
