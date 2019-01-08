@@ -76,11 +76,15 @@ def pesquisar_amigo(request):
         .objects \
         .filter(nome__contains=pesquisa) \
         .exclude(nome=usuario.nome) \
-        .exclude(amigos__in=[usuario]).exclude(usuarios_bloqueados__in=[usuario])
+        .exclude(amigos__in=[usuario]) \
+        .exclude(usuarios_bloqueados__in=[usuario])
 
     convites = Convite.objects.filter(solicitante=usuario, convidado__in=resultado)
 
-    # resultado = resultado.filter(bloqueados__in=usuario.bloqueados.all())
+    filtro = resultado.filter(bloqueados__in=[usuario])
+
+    if filtro:
+        resultado = resultado.exclude(bloqueados=usuario)
 
     if convites:
         resultado = resultado.exclude(nome=convites.all()[0].convidado.nome)
@@ -152,7 +156,6 @@ def perfil_usuario(request, id):
     if usuario.amigos.filter(nome=request.user.perfil.nome):
         amigo = True
     if usuario.convites_recebidos.filter(solicitante=request.user.perfil, convidado=usuario):
-
         convidado = True
 
     context = {

@@ -30,11 +30,9 @@ class Usuario(models.Model):
 
     def bloquear(self, perfil_a_bloquear):
         self.bloqueados.add(perfil_a_bloquear)
-        perfil_a_bloquear.bloqueados.add(self)
 
     def desbloquear(self, perfil_a_desbloquear):
         self.bloqueados.remove(perfil_a_desbloquear)
-        perfil_a_desbloquear.bloqueados.remove(self)
 
     def timeline(self):
         posts = list(self.usuario_postagem.filter())
