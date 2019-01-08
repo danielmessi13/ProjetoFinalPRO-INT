@@ -126,14 +126,18 @@ def convites(request):
 
 @login_required
 def aceitar(request, id):
-    convite = Convite.objects.get(id=id)
+    usuario = Usuario.objects.get(id=id)
+    convite = Convite.objects.filter(solicitante=usuario, convidado=request.user.perfil)
+    convite = convite[0]
     convite.aceitar()
     return redirect('home')
 
 
 @login_required
 def rejeitar(request, id):
-    convite = Convite.objects.get(id=id)
+    usuario = Usuario.objects.get(id=id)
+    convite = Convite.objects.filter(solicitante=usuario, convidado=request.user.perfil)
+    convite = convite[0]
     convite.recusar()
     return redirect('home')
 
@@ -151,6 +155,7 @@ def cancelar_convite(request, id):
 def perfil_usuario(request, id):
     amigo = False
     convidado = False
+    convite = False
 
     usuario = Usuario.objects.get(id=id)
     if usuario.amigos.filter(nome=request.user.perfil.nome):
@@ -158,10 +163,15 @@ def perfil_usuario(request, id):
     if usuario.convites_recebidos.filter(solicitante=request.user.perfil, convidado=usuario):
         convidado = True
 
+    if usuario.convites_recebidos.filter(convidado=request.user.perfil, solicitante=usuario):
+        convite = True
+
+
     context = {
         'perfil': True,
         'usuario': usuario,
         'amigo': amigo,
+        'convite': convite,
         'convidado': convidado,
     }
     return render(request, 'perfil_usuario.html', context)
