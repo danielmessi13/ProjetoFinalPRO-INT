@@ -36,9 +36,10 @@
                                 <hr>
                             {% else %}
                                 <a type="button" class="btn btn-success btn-sm" href="{% url 'convidar' usuario.id %}">Convidar</a>
-                                <a type="button" class="btn btn-danger btn-sm"
-                                   href="{% url 'bloquear' usuario.id %}">Bloquear</a>
-
+                                <a class="btn btn-danger btn-sm action"
+                                   param="{{ usuario.id }}"
+                                   data-msg="Deseja realmente bloquear {{ usuario.nome }} ?"
+                                   positive="remove">Bloquear</a>
                             {% endif %}
 
                         {% endif %}
@@ -54,9 +55,16 @@
             </div>
         </div>
     </div>
-    <center>
-        <strong>Powered by <a href="http://j.mp/metronictheme" target="_blank">KeenThemes</a></strong>
-    </center>
     <br>
     <br>
+
+    <script>
+
+
+        function remove(usuario_id) {
+            top.location.href = "{% url 'bloquear' 9999999 %}".replace(9999999, usuario_id)
+        }
+
+    </script>
 {% endblock %}
+
