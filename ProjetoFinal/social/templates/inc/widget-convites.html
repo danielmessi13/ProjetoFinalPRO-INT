@@ -6,9 +6,9 @@
 
     <ul class="list-group" style=" overflow-y: scroll; height: 73%" >
         {% for convite in request.user.perfil.convites_feitos.all %}
-            <li class="list-group-item">
-                <a class="" href="{% url 'perfil_usuario' convite.convidado.id %}">{{ convite.convidado.nome }} </a>
-                <a href="{% url 'cancelar_convite' convite.id %}" class="badge" style="background: #93291E; float: right">Cancelar</a>
+            <li class="list-group-item" style="text-align: center">
+                <a class="form-control" href="{% url 'perfil_usuario' convite.convidado.id %}">{{ convite.convidado.nome }} </a>
+                <hr>
             </li>
         {% endfor %}
     </ul>

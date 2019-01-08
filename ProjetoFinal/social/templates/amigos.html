@@ -18,7 +18,8 @@
                         <ul class="list-group">
                             {% if convites %}
                                 {% for convite in convites %}
-                                    <li class="list-group-item">{{convite.solicitante.nome}}
+                                    <li class="list-group-item">
+                                        <a href="{% url 'perfil_usuario' convite.solicitante.id %}">{{convite.solicitante.nome}}</a>
                                         <a href="{% url 'rejeitar' convite.id %}" class="badge badge-primary badge-pill" style="background: #93291E">Rejeitar</a>
                                         <a href="{% url 'aceitar' convite.id %}" class="badge badge-danger badge-pill" style="background: #4B79A1">Aceitar</a>
                                     </li>

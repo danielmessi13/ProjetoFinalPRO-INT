@@ -30,14 +30,15 @@
                                href="{% url 'bloquear' usuario.id %}">Bloquear</a>
 
                         {% else %}
-                            {% if not convidado %}
-                                <a type="button" class="btn btn-success btn-sm" href="{% url 'convidar' usuario.id %}">Convidar</a>
-                                <a type="button" class="btn btn-danger btn-sm"
-                                   href="{% url 'bloquear' usuario.id %}">Bloquear</a>
-                            {% else %}
+                            {% if convidado %}
                                 <a type="button" class="btn btn-warning btn-sm"
                                    href="{% url 'cancelar_convite' usuario.id %}">Cancelar convite</a>
                                 <hr>
+                            {% else %}
+                                <a type="button" class="btn btn-success btn-sm" href="{% url 'convidar' usuario.id %}">Convidar</a>
+                                <a type="button" class="btn btn-danger btn-sm"
+                                   href="{% url 'bloquear' usuario.id %}">Bloquear</a>
+
                             {% endif %}
 
                         {% endif %}

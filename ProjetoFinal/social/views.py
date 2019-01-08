@@ -17,7 +17,7 @@ from .forms import *
 
 @login_required
 def index(request):
-    return render(request, 'home.html' , {'usuario': usuario_logado(request)})
+    return render(request, 'home.html', {'usuario': usuario_logado(request)})
 
 
 @login_required
@@ -76,7 +76,7 @@ def pesquisar_amigo(request):
         .objects \
         .filter(nome__contains=pesquisa) \
         .exclude(nome=usuario.nome) \
-        .exclude(amigos__in=[usuario])
+        .exclude(amigos__in=[usuario]).exclude(usuarios_bloqueados__in=[usuario])
 
     convites = Convite.objects.filter(solicitante=usuario, convidado__in=resultado)
 
@@ -136,35 +136,29 @@ def rejeitar(request, id):
 
 @login_required
 def cancelar_convite(request, id):
-    try:
-        convite = Convite.objects.get(id=id)
-
-    except ObjectDoesNotExist:
-
-        usuario = Usuario.objects.get(id=id)
-        convite = Convite.objects.get(convidado=usuario, solicitante=request.user.perfil)
-
-    convite.delete()
-
+    usuario = Usuario.objects.get(id=id)
+    convite = Convite.objects.filter(convidado=usuario, solicitante=request.user.perfil)
+    convite = convite[0]
+    convite.recusar()
     return redirect('convites')
 
 
 @login_required
 def perfil_usuario(request, id):
-
     amigo = False
     convidado = False
 
     usuario = Usuario.objects.get(id=id)
     if usuario.amigos.filter(nome=request.user.perfil.nome):
         amigo = True
-    if usuario.convites_recebidos.filter(solicitante=request.user.perfil):
+    if usuario.convites_recebidos.filter(solicitante=request.user.perfil, convidado=usuario):
+
         convidado = True
 
     context = {
         'perfil': True,
         'usuario': usuario,
-        'amigo' : amigo,
+        'amigo': amigo,
         'convidado': convidado,
     }
     return render(request, 'perfil_usuario.html', context)
