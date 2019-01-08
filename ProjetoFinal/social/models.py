@@ -15,7 +15,7 @@ class Usuario(models.Model):
 
     nome = models.CharField(max_length=128, null=False)
     telefone = models.CharField(max_length=20, null=False)
-    foto = models.ImageField(upload_to='profiles')
+    foto = models.ImageField(upload_to='profiles', default='img/user.png    ')
     sexo = models.CharField(choices=SEXO_CHOICES, null=False, max_length=12)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
     bloqueados = models.ManyToManyField('Usuario', related_name='usuarios_bloqueados')
