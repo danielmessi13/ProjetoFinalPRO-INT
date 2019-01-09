@@ -158,12 +158,19 @@ def perfil_usuario(request, id):
     convite = False
 
     usuario = Usuario.objects.get(id=id)
+
+    print(usuario_logado(request).usuarios_bloqueados.all())
+
+    if usuario_logado(request).usuarios_bloqueados.all() or usuario_logado(request).id == usuario.id:
+        redirect('home')
+
     if usuario.amigos.filter(nome=request.user.perfil.nome):
         amigo = True
+
     if usuario.convites_recebidos.filter(solicitante=request.user.perfil, convidado=usuario):
         convidado = True
 
-    if usuario.convites_recebidos.filter(convidado=request.user.perfil, solicitante=usuario):
+    if usuario.convites_feitos.filter(convidado=request.user.perfil, solicitante=usuario):
         convite = True
 
 

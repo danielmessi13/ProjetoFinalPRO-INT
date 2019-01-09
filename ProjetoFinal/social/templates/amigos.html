@@ -14,7 +14,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Convites</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="overflow-y: scroll">
                         <ul class="list-group">
                             {% if convites %}
                                 {% for convite in convites %}
@@ -34,11 +34,11 @@
                         <h3 class="panel-title">Amigos</h3>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel-body" style="overflow-y: scroll; height: 135px">
                         <ul class="list-group">
                             {% if amigos %}
                                 {% for amigo in amigos %}
-                                    <li class="list-group-item">
+                                    <li class="list-group-item" style="over">
                                         <a href="{% url 'perfil_usuario' amigo.id %}">{{amigo.nome}}</a>
                                         <a href="{% url 'bloquear' amigo.id %}" class="badge badge-primary badge-pill" style="background: #491217">Bloquear</a>
                                         <a href="{% url 'desfazer' amigo.id %}" class="badge badge-primary badge-pill" style="background: #93291E">Desfazer amizade</a>
