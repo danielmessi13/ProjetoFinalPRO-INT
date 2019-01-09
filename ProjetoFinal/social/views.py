@@ -159,12 +159,6 @@ def perfil_usuario(request, id):
 
     usuario = Usuario.objects.get(id=id)
 
-    print(usuario_logado(request).bloqueados.all())
-    print(usuario.bloqueados.all())
-
-    if usuario_logado(request).bloqueados.all() or usuario_logado(request).id == usuario.id or usuario.bloqueados.all():
-        return redirect('home')
-
     if usuario.amigos.filter(nome=request.user.perfil.nome):
         amigo = True
 
