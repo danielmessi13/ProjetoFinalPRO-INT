@@ -56,7 +56,7 @@
                 <div class="box-header with-border">
                     <div class="user-block">
                         <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
-                        <span class="username"><a href="#">{{ postagem.usuario.nome }}</a></span>
+                        <span class="username"><a href="{% url 'perfil_usuario' postagem.usuario.id %}">{{ postagem.usuario.nome }}</a></span>
                         <span class="description">{{ postagem.data }}</span>
                         {% if postagem.usuario.id  == request.user.perfil.id %}
                             <span class="actions">
