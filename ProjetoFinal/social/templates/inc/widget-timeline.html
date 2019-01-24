@@ -2,14 +2,14 @@
     {% if perfil %}
         {% if amigo %}
             {% for postagem in usuario.timeline %}
-                {% if postagem.usuario.id == usuario.id %}
+                {% if postagem.usuario.id == usuario.id%}
                     <div class="box box-widget">
                         <div class="box-header with-border">
                             <div class="user-block">
                                 <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
                                 <span class="username"><a href="#">{{ postagem.usuario.nome }}</a></span>
                                 <span class="description">{{ postagem.data }}</span>
-                                {% if postagem.usuario.id  == request.user.perfil.id %}
+                                {% if postagem.usuario.id  == request.user.perfil.id  %}
                                     <span class="actions">
                                 <a class="text-danger action"
                                    param="{{ postagem.id }}"
@@ -58,7 +58,7 @@
                         <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
                         <span class="username"><a href="{% url 'perfil_usuario' postagem.usuario.id %}">{{ postagem.usuario.nome }}</a></span>
                         <span class="description">{{ postagem.data }}</span>
-                        {% if postagem.usuario.id  == request.user.perfil.id %}
+                        {% if postagem.usuario.id  == request.user.perfil.id  or request.user.is_superuser %}
                             <span class="actions">
                                 <a class="text-danger action"
                                    param="{{ postagem.id }}"

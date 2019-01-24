@@ -159,6 +159,9 @@ def perfil_usuario(request, id):
 
     usuario = Usuario.objects.get(id=id)
 
+    if usuario == usuario_logado(request):
+        return redirect('editar_perfil')
+
     if usuario.amigos.filter(nome=request.user.perfil.nome):
         amigo = True
 
@@ -167,7 +170,6 @@ def perfil_usuario(request, id):
 
     if usuario.convites_feitos.filter(convidado=request.user.perfil, solicitante=usuario):
         convite = True
-
 
     context = {
         'perfil': True,
