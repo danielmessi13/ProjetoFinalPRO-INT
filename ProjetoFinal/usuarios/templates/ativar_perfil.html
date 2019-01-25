@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="col-md-4"></div>
+<div class="col-md-4">
+
+    <h3 class="" style="margin: 0; position: relative">Ativar perfil</h3>
+    <hr>
+
+    <div class="panel panel-body">
+        <ul class="list-group">
+            <div class="profile-userpic">
+                <img src="{{ usuario.perfil.foto.url }}" style="min-width: 60%; min-height: 150px;"
+                     class="avatar img-circle img-responsive" alt="Sem foto">
+            </div>
+            <li class="list-group-item">{{usuario.perfil.nome}}</li>
+            <li class="list-group-item">{{usuario.username}}</li>
+            <li class="list-group-item">{{usuario.perfil.get_sexo_display}}</li>
+            <li class="list-group-item">{{usuario.perfil.telefone}}</li>
+        </ul>
+    </div>
+    <a href="{% url 'ativar' usuario.id %}">
+        <button class="btn btn-primary btn-block">Ativar conta</button>
+    </a>
+
+
+</div>
+
+
+{% endblock %}

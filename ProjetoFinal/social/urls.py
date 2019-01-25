@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import *
-from usuarios.views import RegistrarUsuarioView
+from usuarios.views import *
 from django.contrib.auth import views as v
 
 urlpatterns = [
@@ -26,8 +26,10 @@ urlpatterns = [
     path('cadastrar/', RegistrarUsuarioView.as_view(), name='cadastrar'),
     path('listar/', listar_usuario, name='listar'),
     path('desativar/', desativar, name='desativar_perfil'),
+    path('ativar_perfil/<int:id>', ativar_perfil, name='ativar_perfil'),
+    path('ativar/<int:id>', ativar, name='ativar'),
     path('listar/<int:id>', super_mudanca, name='mudar'),
-    path('login/', v.LoginView.as_view(template_name='login.html'), name='login'),
+    path('login/', LoginCustom.as_view(template_name='login.html'), name='login'),
     path('logout/', v.LogoutView.as_view(template_name='login.html'), name='logout'),
     path('password_reset/$', v.PasswordResetView.as_view(template_name='password_reset_form.html'),
          name='password_reset'),

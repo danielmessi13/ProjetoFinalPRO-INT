@@ -14,7 +14,7 @@ class Usuario(models.Model):
 
     nome = models.CharField(max_length=128, null=False)
     telefone = models.CharField(max_length=20, null=False)
-    foto = models.ImageField(upload_to='profiles', default='img/user.png    ')
+    foto = models.ImageField(upload_to='profiles', default='profiles/user.png')
     sexo = models.CharField(choices=SEXO_CHOICES, null=False, max_length=12)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
     bloqueados = models.ManyToManyField('Usuario', related_name='usuarios_bloqueados')
@@ -47,7 +47,11 @@ class Usuario(models.Model):
         Desativo.objects.create(user=self,motivo=motivo)
         self.user.is_active = 0
         self.user.save()
-        # self.save()
+
+    def ativar(self):
+        self.desativacao.all().delete()
+        self.user.is_active = 1
+        self.user.save()
 
 
 class Anexo(models.Model):
@@ -113,5 +117,5 @@ class Convite(models.Model):
 
 
 class Desativo(models.Model):
-    user = models.ForeignKey(Usuario, related_name='usuario', on_delete=models.CASCADE)
+    user = models.ForeignKey(Usuario, related_name='desativacao', on_delete=models.CASCADE)
     motivo = models.TextField()
