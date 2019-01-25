@@ -5,7 +5,13 @@
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+
+
+                <div class="col-md-3">
+                    {% include 'inc/widget-amigos.html' %}
+                </div>
+
+                <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Publicações</h3>
@@ -70,12 +76,21 @@
                     </div>
                     {% include 'inc/widget-timeline.html' %}
                 </div>
-                <div class="col-md-4">
+
+                <aside class="col-md-3">
+
+                    {% include 'inc/widget-convites.html' %}
+                    {% include 'inc/widget-convidados.html' %}
 
 
-                    {% include 'inc/widget-amigo.html' %}
 
-                </div>
+                </aside>
+{#                <div class="col-md-3">#}
+{##}
+{##}
+{#                    {% include 'inc/widget-procurar-amigo.html' %}#}
+{##}
+{#                </div>#}
 
             </div>
         </div>

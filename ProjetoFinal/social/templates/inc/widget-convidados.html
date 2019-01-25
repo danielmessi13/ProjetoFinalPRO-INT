@@ -1,0 +1,21 @@
+<div class="panel panel-default friends" style="height: 150px">
+        <div class="panel-heading">
+            <h3 class="panel-title">Convites feitos</h3>
+        </div>
+
+        <div class="panel-body" style="overflow-y: scroll;  height: 78%">
+        <ul class="list-group">
+            {% if request.user.perfil.convites_feitos.all %}
+                {% for convite in request.user.perfil.convites_feitos.all %}
+                    <li class="list-group-item" style="text-align: center">
+                        <a class="form-control"
+                           href="{% url 'perfil_usuario' convite.convidado.id %}">{{ convite.convidado.nome }} </a>
+                        <hr>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <h3>Não há convites pendentes :)</h3>
+            {% endif %}
+        </ul>
+        </div>
+</div>

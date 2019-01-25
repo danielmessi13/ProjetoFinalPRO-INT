@@ -1,64 +1,22 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block body%}
-<section>
-    <div class="container">
-        <div class="row">
-            <h3 class="" style="margin: 0;">Social</h3>
-            <hr>
-            <div class="col-md-8">
+{% block body %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <h3 class="" style="margin: 0;">Social</h3>
+                <hr>
 
-                <div class="panel panel-default">
 
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Convites</h3>
-                    </div>
-                    <div class="panel-body" style="overflow-y: scroll">
-                        <ul class="list-group">
-                            {% if convites %}
-                                {% for convite in convites %}
-                                    <li class="list-group-item">
-                                        <a href="{% url 'perfil_usuario' convite.solicitante.id %}">{{convite.solicitante.nome}}</a>
-                                    </li>
-                                {% endfor %}
-                            {% else %}
-                            <h3>Não há convites :(</h3>
-                            {% endif %}
-                        </ul>
-                    </div>
+
+                <div class="col-md-6">
+
+                    {% include 'inc/widget-bloqueados.html' %}
                 </div>
-
-                <div class="panel panel-default">
-                 <div class="panel-heading">
-                        <h3 class="panel-title">Amigos</h3>
-                    </div>
-
-                    <div class="panel-body" style="overflow-y: scroll; height: 135px">
-                        <ul class="list-group">
-                            {% if amigos %}
-                                {% for amigo in amigos %}
-                                    <li class="list-group-item" style="over">
-                                        <a href="{% url 'perfil_usuario' amigo.id %}">{{amigo.nome}}</a>
-                                        <a href="{% url 'bloquear' amigo.id %}" class="badge badge-primary badge-pill" style="background: #491217">Bloquear</a>
-                                        <a href="{% url 'desfazer' amigo.id %}" class="badge badge-primary badge-pill" style="background: #93291E">Desfazer amizade</a>
-                                    </li>
-                                {% endfor %}
-                            {% else %}
-                            <h3>Você não tem amigos :(</h3>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-4">
-                {%include 'inc/widget-convites.html' %}
-                {%include 'inc/widget-bloqueados.html' %}
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 {% endblock %}
 

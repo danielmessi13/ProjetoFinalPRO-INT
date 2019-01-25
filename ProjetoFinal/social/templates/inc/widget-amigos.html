@@ -1,0 +1,22 @@
+<aside>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Amigos</h3>
+        </div>
+
+        <div class="panel-body" style="overflow-y: scroll; height: 135px">
+            <ul class="list-group">
+                {% if request.user.perfil.amigos.all %}
+                    {% for amigo in request.user.perfil.amigos.all %}
+                        <li class="list-group-item" style="over">
+                            <a href="{% url 'perfil_usuario' amigo.id %}">{{ amigo.nome }}</a>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <h3>Você não tem amigos :(</h3>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</aside>

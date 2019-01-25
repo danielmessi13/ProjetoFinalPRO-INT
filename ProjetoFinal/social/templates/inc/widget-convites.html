@@ -1,15 +1,20 @@
-{% load static %}
-<div class="panel panel-default friends" style="height: 150px">
+<div class="panel panel-default">
+
     <div class="panel-heading">
-        <h3 class="panel-title">Convites feitos</h3>
+        <h3 class="panel-title">Convites recebidos</h3>
     </div>
 
-    <ul class="list-group" style=" overflow-y: scroll; height: 73%" >
-        {% for convite in request.user.perfil.convites_feitos.all %}
-            <li class="list-group-item" style="text-align: center">
-                <a class="form-control" href="{% url 'perfil_usuario' convite.convidado.id %}">{{ convite.convidado.nome }} </a>
-                <hr>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="panel-body" style="overflow-y: scroll;  height: 73%">
+        <ul class="list-group">
+            {% if request.user.perfil.convites_recebidos.all %}
+                {% for convite in usuario.convites_recebidos.all %}
+                    <li class="list-group-item" style="text-align: center">
+                        <a href="{% url 'perfil_usuario' convite.solicitante.id %}">{{ convite.solicitante.nome }}</a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <h3>Não há convites :(</h3>
+            {% endif %}
+        </ul>
+    </div>
 </div>
