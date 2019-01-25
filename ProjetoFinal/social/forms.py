@@ -77,3 +77,7 @@ class AnexoForm(forms.ModelForm):
 class EnviarForm(forms.Form):
     email = forms.EmailField(required=True,
                              widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
+
+
+class DesativarForm(forms.Form):
+    motivo = forms.CharField(required=True)

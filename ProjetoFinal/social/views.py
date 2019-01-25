@@ -5,6 +5,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
 from .forms import *
+
+
 # Create your views here.
 
 @login_required
@@ -291,3 +293,17 @@ def super_mudanca(request, id):
     usuario.user.save()
 
     return redirect('listar')
+
+
+@login_required
+def desativar(request):
+
+    if request.method == 'POST':
+        form = DesativarForm(request.POST)
+        if form.is_valid():
+            motivo = form.cleaned_data['motivo']
+            usuario_logado(request).desativar(motivo)
+
+            return redirect('logout')
+
+    return render(request, 'desativar.html')

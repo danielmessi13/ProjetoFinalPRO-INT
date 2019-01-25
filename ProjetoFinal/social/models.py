@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Usuario(models.Model):
-
     SEXO_CHOICES = (
         ('M', 'Masculino'),
         ('F', 'Feminino'),
@@ -43,6 +42,12 @@ class Usuario(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def desativar(self, motivo):
+        Desativo.objects.create(user=self,motivo=motivo)
+        self.user.is_active = 0
+        self.user.save()
+        # self.save()
 
 
 class Anexo(models.Model):
@@ -105,3 +110,8 @@ class Convite(models.Model):
 
     def recusar(self):
         self.delete()
+
+
+class Desativo(models.Model):
+    user = models.ForeignKey(Usuario, related_name='usuario', on_delete=models.CASCADE)
+    motivo = models.TextField()
