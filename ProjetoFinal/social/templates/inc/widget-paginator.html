@@ -1,0 +1,28 @@
+
+
+<nav aria-label="Page navigation examp1e" style="text-align: center">
+    <ul class="pagination">
+
+
+        {% if lista.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo; Primeira</a></li>
+            <li class="page-item"><a class="page-link"
+                                     href="?page={{ lista.previous_page_number }}">Anterior</a></li>
+
+        {% else %}
+            <li class="page-item disabled"><a class="page-link">&laquo; Primeira</a></li>
+            <li class="page-item disabled"><a class="page-link">Anterior</a></li>
+        {% endif %}
+
+        {% if lista.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ lista.next_page_number }}">Proxima</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ lista.paginator.num_pages }}">Ultima &raquo;</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link">Proxima</a>
+            </li>
+            <li class="page-item disabled"><a class="page-link">Ultima
+                &raquo;</a></li>
+        {% endif %}
+    </ul>
+</nav>

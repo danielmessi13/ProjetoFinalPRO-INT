@@ -1,23 +1,19 @@
-from django.conf import settings
-from datetime import date
-from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
-from django.core.exceptions import ObjectDoesNotExist
-
+from django.core.paginator import Paginator, InvalidPage
 from .forms import *
-
-
 # Create your views here.
 
 @login_required
 def index(request):
-    return render(request, 'home.html', {'usuario': usuario_logado(request)})
+    paginator = Paginator(usuario_logado(request).timeline(), 10)
+    page = request.GET.get('page')
+    lista = paginator.get_page(page)
+
+    return render(request, 'home.html', {'lista': lista})
 
 
 @login_required
@@ -69,6 +65,7 @@ def postar_deletar(request, id):
 
 @login_required
 def pesquisar_amigo(request):
+    messages.add_message(request, messages.INFO, 'Hello world.')
     pesquisa = request.GET['q']
     usuario = usuario_logado(request)
 
