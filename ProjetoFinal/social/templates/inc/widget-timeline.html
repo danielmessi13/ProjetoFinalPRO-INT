@@ -1,52 +1,99 @@
 {% if request.user.perfil.timeline %}
-
     {% for postagem in lista %}
-        <div class="box box-widget">
-            <div class="box-header with-border">
-                <div class="user-block">
-                    <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
-                    <span class="username"><a
-                            href="{% url 'perfil_usuario' postagem.usuario.id %}">{{ postagem.usuario.nome }}</a></span>
-                    <span class="description">{{ postagem.data }}</span>
-                    {% if postagem.usuario.id  == request.user.perfil.id  or request.user.is_superuser %}
-                        <span class="actions">
+        {% if usuario.id == request.user.perfil.id %}
+            <div class="box box-widget">
+                <div class="box-header with-border">
+                    <div class="user-block">
+                        <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
+                        <span class="username"><a
+                                href="{% url 'perfil_usuario' postagem.usuario.id %}">{{ postagem.usuario.nome }}</a></span>
+                        <span class="description">{{ postagem.data }}</span>
+                        {% if postagem.usuario.id  == request.user.perfil.id  or request.user.is_superuser %}
+                            <span class="actions">
                                 <a class="text-danger action"
                                    param="{{ postagem.id }}"
                                    data-msg="Deseja deletar a postagem '{{ postagem.texto }}' ?"
-                                   positive="remove"><i class="fa fa-trash"></i></a>
+                                   positive="deletar_postagem"><i class="fa fa-trash"></i></a>
                             </span>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="box-body">
-                <p>{{ postagem.texto }}</p>
-                {% if postagem.anexo_postagem %}
-                    {% for anexo in postagem.anexo_postagem.all %}
-                        {% if anexo.tipo == 'P' %}
-                            <p><a target="_blank" href="{{ anexo.arquivo.url }}"><i class="fa fa-file-pdf"></i>
-                                Anexo</a>
-                            </p>
-                        {% elif anexo.tipo == 'I' %}
-                            <img class="img-responsive show-in-modal"
-                                 src="{{ anexo.arquivo.url }}"
-                                 alt="Photo">
                         {% endif %}
-                    {% endfor %}
-                {% endif %}
-                <br>
-                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Compartilhar
-                </button>
-                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Gostei
-                </button>
-                <span class="pull-right text-muted"></span>
-            </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <p>{{ postagem.texto }}</p>
+                    {% if postagem.anexo_postagem %}
+                        {% for anexo in postagem.anexo_postagem.all %}
+                            {% if anexo.tipo == 'P' %}
+                                <p><a target="_blank" href="{{ anexo.arquivo.url }}"><i class="fa fa-file-pdf"></i>
+                                    Anexo</a>
+                                </p>
+                            {% elif anexo.tipo == 'I' %}
+                                <img class="img-responsive show-in-modal"
+                                     src="{{ anexo.arquivo.url }}"
+                                     alt="Photo">
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <br>
+                    <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Compartilhar
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Gostei
+                    </button>
+                    <span class="pull-right text-muted"></span>
+                </div>
 
-        </div>
+            </div>
+        {% else %}
+            {% if amigo or request.user.is_superuser %}
+            <div class="box box-widget">
+                <div class="box-header with-border">
+                    <div class="user-block">
+                        <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
+                        <span class="username"><a
+                                href="{% url 'perfil_usuario' postagem.usuario.id %}">{{ postagem.usuario.nome }}</a></span>
+                        <span class="description">{{ postagem.data }}</span>
+                        {% if postagem.usuario.id  == request.user.perfil.id  or request.user.is_superuser %}
+                            <span class="actions">
+                                <a class="text-danger action"
+                                   param="{{ postagem.id }}"
+                                   data-msg="Deseja deletar a postagem '{{ postagem.texto }}' ?"
+                                   positive="deletar_postagem"><i class="fa fa-trash"></i></a>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="box-body">
+                    <p>{{ postagem.texto }}</p>
+                    {% if postagem.anexo_postagem %}
+                        {% for anexo in postagem.anexo_postagem.all %}
+                            {% if anexo.tipo == 'P' %}
+                                <p><a target="_blank" href="{{ anexo.arquivo.url }}"><i class="fa fa-file-pdf"></i>
+                                    Anexo</a>
+                                </p>
+                            {% elif anexo.tipo == 'I' %}
+                                <img class="img-responsive show-in-modal"
+                                     src="{{ anexo.arquivo.url }}"
+                                     alt="Photo">
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <br>
+                    <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Compartilhar
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Gostei
+                    </button>
+                    <span class="pull-right text-muted"></span>
+                </div>
+
+            </div>
+            {% endif %}
+        {% endif %}
     {% endfor %}
 
-    <div class="col-md-pull-7 ">
-                {% include 'inc/widget-paginator.html' %}
-            </div>
+    {% if lista and amigo or lista and request.user.is_superuser %}
+        <div class="col-md-pull-7 ">
+            {% include 'inc/widget-paginator.html' %}
+        </div>
+    {% endif %}
 
 
 
@@ -56,3 +103,9 @@
 
 
 
+
+<script>
+    function deletar_postagem(post_id) {
+        top.location.href = "{% url 'postagem_deletar' 9999999 %}".replace(9999999, post_id)
+    }
+</script>

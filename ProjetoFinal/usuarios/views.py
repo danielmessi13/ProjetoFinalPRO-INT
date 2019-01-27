@@ -30,10 +30,8 @@ class RegistrarUsuarioView(View):
         return render(request, self.template_name, {'form': form})
 
 
-
-
 class LoginCustom(View):
-    template_name = 'login.html'
+    template_name = 'log in.html'
 
     def get(self, request):
         return render(request, self.template_name)

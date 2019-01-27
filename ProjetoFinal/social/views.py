@@ -15,7 +15,7 @@ def index(request):
     page = request.GET.get('page')
     lista = paginator.get_page(page)
 
-    return render(request, 'home.html', {'lista': lista})
+    return render(request, 'home.html', {'lista': lista, 'usuario': usuario_logado(request)})
 
 
 @login_required
@@ -61,7 +61,7 @@ def postar_editar(request, id):
 @login_required
 def postar_deletar(request, id):
     postagem = Postagem.objects.get(id=id)
-    print(postagem.delete())
+    postagem.delete()
     return redirect('home')
 
 
@@ -157,6 +157,9 @@ def perfil_usuario(request, id):
     convite = False
 
     usuario = Usuario.objects.get(id=id)
+    paginator = Paginator(usuario.timeline(), 10)
+    page = request.GET.get('page')
+    lista = paginator.get_page(page)
 
     if usuario == usuario_logado(request):
         return redirect('editar_perfil')
@@ -171,6 +174,7 @@ def perfil_usuario(request, id):
         convite = True
 
     context = {
+        'lista': lista,
         'perfil': True,
         'usuario': usuario,
         'amigo': amigo,

@@ -6,9 +6,6 @@
         <div class="container">
             <div class="row">
 
-
-
-
                 <nav class="col-md-3">
                     {% include 'inc/widget-amigos.html' %}
                 </nav>
@@ -112,11 +109,6 @@
         function setTipo(tipo) {
             $('#tipo_anexo').val(tipo)
         }
-
-        function remove(post_id) {
-            top.location.href = "{% url 'postagem_deletar' 9999999 %}".replace(9999999, post_id)
-        }
-
     </script>
 {% endblock %}
 

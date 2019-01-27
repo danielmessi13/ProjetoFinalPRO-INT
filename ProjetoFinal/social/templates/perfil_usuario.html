@@ -56,7 +56,7 @@
                     <a class="btn btn-danger btn-sm action"
                        param="{{ usuario.id }}"
                        data-msg="Deseja realmente bloquear {{ usuario.nome }} ?"
-                       positive="remove">Bloquear</a>
+                       positive="bloquear">Bloquear</a>
 
                     {% endif %}
                     {% endif %}
@@ -80,7 +80,7 @@
 <script>
 
 
-        function remove(usuario_id) {
+        function bloquear(usuario_id) {
             top.location.href = "{% url 'bloquear' 9999999 %}".replace(9999999, usuario_id)
         }
 
