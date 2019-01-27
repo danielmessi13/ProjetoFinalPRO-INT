@@ -2,82 +2,90 @@
 {% load static %}
 
 {% block body %}
-<div class="container">
-    <div class="row profile">
-        <div class="col-md-3">
-            <div class="profile-sidebar">
-                <!-- SIDEBAR USERPIC -->
-                <div class="profile-userpic">
-                    <img src="{{ usuario.foto.url }}" style="min-width: 60%; min-height: 150px;"
-                         class="avatar img-circle img-responsive" alt="">
-                </div>
-                <!-- END SIDEBAR USERPIC -->
-                <!-- SIDEBAR USER TITLE -->
-                <div class="profile-usertitle">
-                    <div class="profile-usertitle-name">
-                        {{ usuario.nome }}
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic">
+                        <img src="{{ usuario.foto.url }}" style="min-width: 60%; min-height: 150px;"
+                             class="avatar img-circle img-responsive" alt="">
                     </div>
-                    <div class="profile-usertitle-job">
-                        {{ usuario.telefone }}
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ usuario.nome }}
+                        </div>
+                        <div class="profile-usertitle-job">
+                            {{ usuario.telefone }}
+                        </div>
                     </div>
+                    <!-- END SIDEBAR USER TITLE -->
+                    <!-- SIDEBAR BUTTONS -->
+                    <div class="profile-userbuttons">
+                        {% if amigo %}
+
+                            <a type="button" class="btn btn-warning btn-sm"
+                               href="{% url 'desfazer' usuario.id %}">Desfazer amizade</a>
+                            <a type="button" class="btn btn-danger btn-sm"
+                               href="{% url 'bloquear' usuario.id %}">Bloquear</a>
+
+                        {% else %}
+
+                            {% if convite %}
+
+                                <a type="button" class="btn btn-warning btn-sm"
+                                   href="{% url 'aceitar' usuario.id %}">Aceitar convite</a>
+                                <hr>
+                                <a type="button" class="btn btn-warning btn-sm"
+                                   href="{% url 'rejeitar' usuario.id %}">Rejeitar convite</a>
+
+                            {% else %}
+
+                                {% if convidado %}
+                                    <a type="button" class="btn btn-warning btn-sm"
+                                       href="{% url 'cancelar_convite' usuario.id %}">Cancelar convite</a>
+                                    <hr>
+                                {% else %}
+
+                                    {% if not convidado %}
+
+
+                                        <a type="button" class="btn btn-success btn-sm"
+                                           href="{% url 'convidar' usuario.id %}">Convidar</a>
+                                        <a class="btn btn-danger btn-sm action"
+                                           param="{{ usuario.id }}"
+                                           data-msg="Deseja realmente bloquear {{ usuario.nome }} ?"
+                                           positive="bloquear">Bloquear</a>
+
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                    </div>
+
                 </div>
-                <!-- END SIDEBAR USER TITLE -->
-                <!-- SIDEBAR BUTTONS -->
-                <div class="profile-userbuttons">
-                    {% if amigo %}
-
-                    <a type="button" class="btn btn-warning btn-sm"
-                       href="{% url 'desfazer' usuario.id %}">Desfazer amizade</a>
-                    <a type="button" class="btn btn-danger btn-sm"
-                       href="{% url 'bloquear' usuario.id %}">Bloquear</a>
-
-                    {% else %}
-
-                    {% if convite %}
-
-                    <a type="button" class="btn btn-warning btn-sm"
-                       href="{% url 'aceitar' usuario.id %}">Aceitar convite</a>
-                    <hr>
-                    <a type="button" class="btn btn-warning btn-sm"
-                       href="{% url 'rejeitar' usuario.id %}">Rejeitar convite</a>
-
-                    {% else %}
-
-                    {% if convidado %}
-                    <a type="button" class="btn btn-warning btn-sm"
-                       href="{% url 'cancelar_convite' usuario.id %}">Cancelar convite</a>
-                    <hr>
-                    {% else %}
-
-                    {% if not convidado %}
-
-
-                    <a type="button" class="btn btn-success btn-sm" href="{% url 'convidar' usuario.id %}">Convidar</a>
-                    <a class="btn btn-danger btn-sm action"
-                       param="{{ usuario.id }}"
-                       data-msg="Deseja realmente bloquear {{ usuario.nome }} ?"
-                       positive="bloquear">Bloquear</a>
-
-                    {% endif %}
-                    {% endif %}
-                    {% endif %}
-                    {% endif %}
-
-                </div>
-
             </div>
-        </div>
-        <div class="col-md-9">
-            <div class="profile-content">
-                {% include 'inc/widget-timeline.html' %}
+            <div class="col-md-9">
+                <div class="profile-content">
+                    {% if usuario.user.is_active %}
+                        {% include 'inc/widget-timeline.html' %}
+                    {% else %}
+                        <div class="panel panel-danger">
+                            <h4 style="text-align: center" class="text text-danger">Perfil inativo</h4>
+
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
-<br>
-<br>
+    <br>
+    <br>
 
-<script>
+    <script>
 
 
         function bloquear(usuario_id) {
@@ -85,8 +93,6 @@
         }
 
 
-
-
-</script>
+    </script>
 {% endblock %}
 
