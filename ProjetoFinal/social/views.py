@@ -5,6 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
 from .forms import *
+from django.db import transaction
 
 
 # Create your views here.
@@ -19,6 +20,7 @@ def index(request):
 
 
 @login_required
+@transaction.atomic
 def postar(request):
     if request.method == "POST":
         form = PostagemForm(request.POST)
@@ -45,6 +47,7 @@ def postar(request):
 
 
 @login_required
+@transaction.atomic
 def postar_editar(request, id):
     postagem = get_object_or_404(Postagem, id=id)
     if request.method == "POST":
@@ -59,6 +62,7 @@ def postar_editar(request, id):
 
 
 @login_required
+@transaction.atomic
 def postar_deletar(request, id):
     postagem = Postagem.objects.get(id=id)
     postagem.delete()
@@ -66,6 +70,7 @@ def postar_deletar(request, id):
 
 
 @login_required
+@transaction.atomic
 def pesquisar_amigo(request):
     messages.add_message(request, messages.INFO, 'Hello world.')
     pesquisa = request.GET['q']
@@ -102,6 +107,7 @@ def usuario_logado(request):
 
 
 @login_required
+@transaction.atomic
 def convidar(request, id):
     perfil_a_convidar = Usuario.objects.get(id=id)
     perfil_logado = usuario_logado(request)
@@ -110,6 +116,7 @@ def convidar(request, id):
 
 
 @login_required
+@transaction.atomic
 def convites(request):
     usuario = usuario_logado(request)
     convites = usuario.convites_recebidos.all()
@@ -124,6 +131,7 @@ def convites(request):
 
 
 @login_required
+@transaction.atomic
 def aceitar(request, id):
     usuario = Usuario.objects.get(id=id)
     convite = Convite.objects.filter(solicitante=usuario, convidado=request.user.perfil)
@@ -133,6 +141,7 @@ def aceitar(request, id):
 
 
 @login_required
+@transaction.atomic
 def rejeitar(request, id):
     usuario = Usuario.objects.get(id=id)
     convite = Convite.objects.filter(solicitante=usuario, convidado=request.user.perfil)
@@ -142,6 +151,7 @@ def rejeitar(request, id):
 
 
 @login_required
+@transaction.atomic
 def cancelar_convite(request, id):
     usuario = Usuario.objects.get(id=id)
     convite = Convite.objects.filter(convidado=usuario, solicitante=request.user.perfil)
@@ -151,6 +161,7 @@ def cancelar_convite(request, id):
 
 
 @login_required
+@transaction.atomic
 def perfil_usuario(request, id):
     amigo = False
     convidado = False
@@ -185,6 +196,7 @@ def perfil_usuario(request, id):
 
 
 @login_required
+@transaction.atomic
 def editar_perfil(request):
     if request.method == 'POST':
         form_editar = UsuarioForm(request.POST)
@@ -234,6 +246,7 @@ def editar_perfil(request):
 
 
 @login_required
+@transaction.atomic
 def alterar_senha(request):
     form_senha = PasswordChangeForm(user=request.user)
 
@@ -253,6 +266,7 @@ def alterar_senha(request):
 
 
 @login_required
+@transaction.atomic
 def desfazer(request, id):
     usuario = usuario_logado(request)
     usuario.amigos.remove(id)
@@ -262,6 +276,7 @@ def desfazer(request, id):
 
 
 @login_required
+@transaction.atomic
 def bloquear(request, id):
     bloquear = Usuario.objects.get(id=id)
     usuario = usuario_logado(request)
@@ -271,6 +286,7 @@ def bloquear(request, id):
 
 
 @login_required
+@transaction.atomic
 def desbloquear(request, id):
     bloqueado = Usuario.objects.get(id=id)
     usuario = usuario_logado(request)
@@ -280,6 +296,7 @@ def desbloquear(request, id):
 
 
 @login_required
+@transaction.atomic
 def listar_usuario(request):
     if not request.user.is_superuser:
         return render(request, 'forbidden.html')
@@ -288,6 +305,7 @@ def listar_usuario(request):
 
 
 @login_required
+@transaction.atomic
 def super_mudanca(request, id):
     usuario = Usuario.objects.get(id=id)
     if usuario.user.is_superuser:
@@ -300,6 +318,7 @@ def super_mudanca(request, id):
 
 
 @login_required
+@transaction.atomic
 def desativar(request):
 
     if request.method == 'POST':
