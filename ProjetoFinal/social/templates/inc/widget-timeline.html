@@ -1,6 +1,6 @@
 {% if usuario.timeline %}
     {% if perfil %}
-        {% if amigo %}
+        {% if amigo or request.user.is_superuser %}
             {% for postagem in usuario.timeline %}
                 {% if postagem.usuario.id == usuario.id%}
                     <div class="box box-widget">
@@ -9,12 +9,12 @@
                                 <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
                                 <span class="username"><a href="#">{{ postagem.usuario.nome }}</a></span>
                                 <span class="description">{{ postagem.data }}</span>
-                                {% if postagem.usuario.id  == request.user.perfil.id  %}
+                                {% if postagem.usuario.id  == request.user.perfil.id or request.user.is_superuser%}
                                     <span class="actions">
                                 <a class="text-danger action"
                                    param="{{ postagem.id }}"
                                    data-msg="Deseja deletar a postagem '{{ postagem.texto }}' ?"
-                                   positive="remove"><i class="fa fa-trash"></i></a>
+                                   positive="del"><i class="fa fa-trash"></i></a>
                             </span>
                                 {% endif %}
                             </div>
@@ -58,7 +58,7 @@
                         <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
                         <span class="username"><a href="{% url 'perfil_usuario' postagem.usuario.id %}">{{ postagem.usuario.nome }}</a></span>
                         <span class="description">{{ postagem.data }}</span>
-                        {% if postagem.usuario.id  == request.user.perfil.id  or request.user.is_superuser %}
+                        {% if postagem.usuario.id  == request.user.perfil.id %}
                             <span class="actions">
                                 <a class="text-danger action"
                                    param="{{ postagem.id }}"
@@ -95,3 +95,10 @@
     {% endif %}
 
 {% endif %}
+
+
+<script>
+    function del(post_id) {
+            top.location.href = "{% url 'postagem_deletar' 9999999 %}".replace(9999999, post_id)
+        }
+</script>

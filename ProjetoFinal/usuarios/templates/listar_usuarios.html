@@ -13,7 +13,7 @@
                 {% if usuarios %}
                 {% for usuario in usuarios %}
                 <li class="list-group-item">
-                    {{usuario.nome}}
+                    <span class="username"><a href="{% url 'perfil_usuario' usuario.id %}">{{ usuario.nome }}</a></span>
                     {% if usuario.user.is_superuser %}
                     <input class="pull-right " style="margin-left:5px" type="checkbox" disabled checked name="" id="1">
                     <a href="{% url 'mudar' usuario.id %}" class="badge badge-primary badge-pill pull-right" style="background: #491217">Retirar
