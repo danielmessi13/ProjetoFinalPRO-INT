@@ -29,6 +29,7 @@ def postar(request):
             model_instance.usuario = usuario_logado(request)
             model_instance.save()
             tipo = request.POST['tipo']
+            messages.success(request,"Post criado com sucesso")
             if tipo:
                 if tipo == 'P':
                     request.FILES['arquivo'] = request.FILES['pdf']
@@ -43,6 +44,7 @@ def postar(request):
                     print(anexo.errors)
         else:
             print(form.errors)
+            messages.error(request, "Erro ao criar o post")
     return redirect('home')
 
 
@@ -56,6 +58,7 @@ def postar_editar(request, id):
             model_instance = form.save(commit=False)
             model_instance.usuario = usuario_logado(request)
             model_instance.save()
+            messages.success(request, "Post salvo com sucesso")
         else:
             print(form.errors)
     return redirect('home')
@@ -66,6 +69,7 @@ def postar_editar(request, id):
 def postar_deletar(request, id):
     postagem = Postagem.objects.get(id=id)
     postagem.delete()
+    messages.success(request, "Post deletado com sucesso")
     return redirect('home')
 
 
