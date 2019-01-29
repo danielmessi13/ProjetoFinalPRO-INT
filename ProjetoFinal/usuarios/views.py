@@ -6,6 +6,7 @@ from usuarios.forms import *
 from social.models import *
 from django.contrib.auth.models import User
 from django.views.generic.base import View
+from django.contrib import messages
 
 
 class RegistrarUsuarioView(View):
@@ -62,7 +63,11 @@ def ativar(request, id):
 
 def getUsuario(request, email):
     try:
-        return User.objects.all().get(username=email)
+        usuario = User.objects.all().get(username=email)
+        if usuario.is_active == 0:
+            return User.objects.all().get(username=email)
+        else:
+            messages.error(request, 'Senha incorreta')
     except User.DoesNotExist:
         return None
 

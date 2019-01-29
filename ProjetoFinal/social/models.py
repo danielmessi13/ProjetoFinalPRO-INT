@@ -49,6 +49,7 @@ class Usuario(models.Model):
         self.user.save()
 
     def ativar(self):
+        print('deu bm')
         self.desativacao.delete()
         self.user.is_active = 1
         self.user.save()
