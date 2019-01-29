@@ -17,6 +17,8 @@
             <li class="list-group-item">{{usuario.username}}</li>
             <li class="list-group-item">{{usuario.perfil.get_sexo_display}}</li>
             <li class="list-group-item">{{usuario.perfil.telefone}}</li>
+            <li class="list-group-item">Motivo da desativação: {{usuario.perfil.desativacao}}</li>
+
         </ul>
     </div>
     <a href="{% url 'ativar' usuario.id %}">

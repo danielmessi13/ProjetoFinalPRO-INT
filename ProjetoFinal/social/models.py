@@ -117,5 +117,8 @@ class Convite(models.Model):
 
 
 class Desativo(models.Model):
-    user = models.ForeignKey(Usuario, related_name='desativacao', on_delete=models.CASCADE)
+    user = models.OneToOneField(Usuario, related_name='desativacao', on_delete=models.CASCADE)
     motivo = models.TextField()
+
+    def __str__(self):
+        return self.motivo

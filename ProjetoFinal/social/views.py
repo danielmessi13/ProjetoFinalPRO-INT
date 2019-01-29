@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
 from .forms import *
 from django.db import transaction
+import time
 
 
 # Create your views here.
@@ -16,7 +17,7 @@ def index(request):
     page = request.GET.get('page')
     lista = paginator.get_page(page)
 
-    return render(request, 'home.html', {'lista': lista, 'usuario': usuario_logado(request)})
+    return render(request, 'home.html', {'lista': lista, 'usuario': usuario_logado(request), 'pages': paginator.num_pages})
 
 
 @login_required
@@ -45,6 +46,7 @@ def postar(request):
         else:
             print(form.errors)
             messages.error(request, "Erro ao criar o post")
+
     return redirect('home')
 
 
@@ -76,7 +78,7 @@ def postar_deletar(request, id):
 @login_required
 @transaction.atomic
 def pesquisar_amigo(request):
-    messages.add_message(request, messages.INFO, 'Hello world.')
+    # messages.add_message(request, messages.INFO, 'Hello world.')
     pesquisa = request.GET['q']
     usuario = usuario_logado(request)
 
@@ -116,6 +118,7 @@ def convidar(request, id):
     perfil_a_convidar = Usuario.objects.get(id=id)
     perfil_logado = usuario_logado(request)
     perfil_logado.convidar(perfil_a_convidar)
+    time.sleep(1.2)
     return redirect('home')
 
 
