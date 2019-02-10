@@ -4,12 +4,23 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+
+from social.serializers import PostagemSerializer
 from .forms import *
 from django.db import transaction
 import time
 
 
 # Create your views here.
+class ListarPostagens(generics.ListCreateAPIView):
+    queryset = Postagem.objects.all()
+    serializer_class = PostagemSerializer
+    name = 'usuario-list'
+
+
 
 @login_required
 def index(request):
@@ -17,7 +28,8 @@ def index(request):
     page = request.GET.get('page')
     lista = paginator.get_page(page)
 
-    return render(request, 'home.html', {'lista': lista, 'usuario': usuario_logado(request), 'pages': paginator.num_pages})
+    return render(request, 'home.html',
+                  {'lista': lista, 'usuario': usuario_logado(request), 'pages': paginator.num_pages})
 
 
 @login_required
@@ -30,7 +42,7 @@ def postar(request):
             model_instance.usuario = usuario_logado(request)
             model_instance.save()
             tipo = request.POST['tipo']
-            messages.success(request,"Post criado com sucesso")
+            messages.success(request, "Post criado com sucesso")
             if tipo:
                 if tipo == 'P':
                     request.FILES['arquivo'] = request.FILES['pdf']
@@ -327,7 +339,6 @@ def super_mudanca(request, id):
 @login_required
 @transaction.atomic
 def desativar(request):
-
     if request.method == 'POST':
         form = DesativarForm(request.POST)
         if form.is_valid():
@@ -337,3 +348,5 @@ def desativar(request):
             return redirect('logout')
 
     return render(request, 'desativar.html')
+
+

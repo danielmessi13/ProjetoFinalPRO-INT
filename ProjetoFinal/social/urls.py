@@ -31,6 +31,7 @@ urlpatterns = [
     path('listar/<int:id>', super_mudanca, name='mudar'),
     path('login/', LoginCustom.as_view(template_name='login.html'), name='login'),
     path('logout/', v.LogoutView.as_view(template_name='login.html'), name='logout'),
+    path('postagem-list.json/', ListarPostagens.as_view(), name=ListarPostagens.name),
     path('password_reset/$', v.PasswordResetView.as_view(template_name='password_reset_form.html'),
          name='password_reset'),
     path('password_reset/done/$', v.PasswordResetDoneView.as_view(template_name='password_reset_done.html'),
