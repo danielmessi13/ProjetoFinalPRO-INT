@@ -44,7 +44,6 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('reset/done/$', v.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
          name='password_reset_complete'),
-    path('usuario-list/', ListarUsuarios.as_view(), name=ListarUsuarios.name),
 
 ]
 
