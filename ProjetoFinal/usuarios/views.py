@@ -7,13 +7,20 @@ from social.models import *
 from django.contrib.auth.models import User
 from django.views.generic.base import View
 from django.contrib import messages
+import requests
 
 
 class RegistrarUsuarioView(View):
     template_name = 'registrar.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        lista = []
+
+        for i in requests.get(
+                'http://apiadvisor.climatempo.com.br/api/v1/locale/city?country=BR&token=2a691966e8904c5a99c6e582564ee847').json():
+            lista.append(i['name'])
+
+        return render(request, self.template_name, {'lista': lista})
 
     def post(self, request):
         form = RegistrarUsuarioForm(request.POST)
@@ -42,7 +49,7 @@ class LoginCustom(View):
         senha = request.POST['password']
         user = authenticate(username=email, password=senha)
         if user is not None:
-            login(request,user)
+            login(request, user)
             return redirect('home')
 
         if getUsuario(request, email):
@@ -50,10 +57,12 @@ class LoginCustom(View):
 
         return redirect('login')
 
+
 def ativar_perfil(request, id):
     usuario = User.objects.get(id=id)
 
-    return render(request, 'ativar_perfil.html' , {'usuario': usuario})
+    return render(request, 'ativar_perfil.html', {'usuario': usuario})
+
 
 def ativar(request, id):
     usuario = User.objects.get(id=id)
@@ -70,4 +79,3 @@ def getUsuario(request, email):
             messages.error(request, 'Senha incorreta')
     except User.DoesNotExist:
         return None
-

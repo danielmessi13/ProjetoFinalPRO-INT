@@ -19,6 +19,7 @@ class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
     bloqueados = models.ManyToManyField('Usuario', related_name='usuarios_bloqueados')
     amigos = models.ManyToManyField('Usuario', related_name='amigos_usuario')
+    cidade = models.CharField(max_length=128, null=False, default='Teresina')
 
     @property
     def email(self):

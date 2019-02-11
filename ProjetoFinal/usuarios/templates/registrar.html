@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block body %}
-{% load i18n %}
+    {% load i18n %}
     <form action="{% url 'cadastrar' %}" method="post" class="form-signin">
         {% csrf_token %}
         <h2 class="form-signin-heading">{% trans 'Crie seu usuário' %}</h2>
         <div class="form-group">
-            <input id="id_nome" name="nome" type="text" placeholder="{% trans 'Nome *' %}" class="form-control" required autofocus>
+            <input id="id_nome" name="nome" type="text" placeholder="{% trans 'Nome *' %}" class="form-control" required
+                   autofocus>
         </div>
 
         <div class="form-group">
@@ -16,24 +17,24 @@
             </select>
         </div>
         <div class="form-group">
-            <input id="id_email" name="email" type="email" placeholder= "{% trans 'Email *' %}" class="form-control" required>
+            <input id="id_email" name="email" type="email" placeholder="{% trans 'Email *' %}" class="form-control"
+                   required>
         </div>
         <div class="form-group">
-            <input id="id_senha" name="senha" type="password" placeholder="{% trans 'Senha *' %}" class="form-control" required>
+            <input id="id_senha" name="senha" type="password" placeholder="{% trans 'Senha *' %}" class="form-control"
+                   required>
         </div>
 
 
         <hr/>
         <div class="form-group">
-            <input id="id_fone" name="telefone" type="tel" placeholder="{% trans 'Telefone *' %}" class="form-control" required>
+            <input id="id_fone" name="telefone" type="tel" placeholder="{% trans 'Telefone *' %}" class="form-control"
+                   required>
         </div>
-
 
         <div class="form-group">
-            <button type="submit" value="Login" class="btn btn-primary btn-block">{% trans 'Cadastrar' %}</button>
+            <input id="id_fone" name="cidade" placeholder="{% trans 'Cidade *' %}" class="form-control" required>
         </div>
-
-
 
 
         <hr/>
