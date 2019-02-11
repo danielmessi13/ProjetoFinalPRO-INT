@@ -56,15 +56,28 @@ def index(request):
     paginator = Paginator(usuario_logado(request).timeline(), 10)
     usuario = usuario_logado(request)
     stories = []
+    indicados = []
 
     for amigo in usuario.amigos.all():
         stories.append(amigo.stories_usuario.all())
+
+    for a in usuario.amigos.all():
+        if len(indicados) > 5:
+            break
+        for i in a.amigos.all():
+            if len(indicados) > 5:
+                break
+
+            if i not in indicados and i not in usuario.amigos.all() and i != usuario and i not in usuario.bloqueados.all() and not usuario.convites_feitos.all().filter(
+                    solicitante=usuario, convidado=i):
+                indicados.append(i)
 
     page = request.GET.get('page')
     lista = paginator.get_page(page)
 
     return render(request, 'home.html',
-                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories})
+                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                   'indicados': indicados})
 
 
 @login_required
