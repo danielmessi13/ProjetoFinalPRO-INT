@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import *
 from usuarios.views import *
+from social.views import *
 from django.contrib.auth import views as v
 
 urlpatterns = [
@@ -42,7 +43,6 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('reset/done/$', v.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
          name='password_reset_complete'),
-    path('usuario-list/', ListarUsuarios.as_view(), name=ListarUsuarios.name),
 
 ]
 

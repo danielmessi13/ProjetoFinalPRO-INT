@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 02:52-0200\n"
+"POT-Creation-Date: 2019-02-11 03:36-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\Fakebook\settings.py:116
+#: .\Fakebook\settings.py:124
 msgid "English"
 msgstr ""
 
-#: .\Fakebook\settings.py:117
+#: .\Fakebook\settings.py:125
 msgid "Brazilian portuguese"
 msgstr "Português do Brasil"
 
@@ -233,6 +233,22 @@ msgstr ""
 
 #: .\social\templates\password_reset_form.html:32
 msgid "Por favor, verifique o Email"
+msgstr ""
+
+#: .\social\views.py:74
+msgid "Post criado com sucesso"
+msgstr ""
+
+#: .\social\views.py:90
+msgid "Erro ao criar o post"
+msgstr ""
+
+#: .\social\views.py:106
+msgid "Post salvo com sucesso"
+msgstr ""
+
+#: .\social\views.py:118
+msgid "Post deletado com sucesso"
 msgstr ""
 
 #: .\usuarios\forms.py:22

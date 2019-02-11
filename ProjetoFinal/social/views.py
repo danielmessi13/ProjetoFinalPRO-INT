@@ -17,6 +17,7 @@ from social.serializers import PostagemSerializer
 from .forms import *
 from django.db import transaction
 import time
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
@@ -70,7 +71,8 @@ def postar(request):
             model_instance.usuario = usuario_logado(request)
             model_instance.save()
             tipo = request.POST['tipo']
-            messages.success(request, "Post criado com sucesso")
+            texto1 = _("Post criado com sucesso")
+            messages.success(request, texto1)
             if tipo:
                 if tipo == 'P':
                     request.FILES['arquivo'] = request.FILES['pdf']
@@ -85,7 +87,8 @@ def postar(request):
                     print(anexo.errors)
         else:
             print(form.errors)
-            messages.error(request, "Erro ao criar o post")
+            texto = _("Erro ao criar o post")
+            messages.error(request, texto)
 
     return redirect('home')
 
@@ -100,7 +103,8 @@ def postar_editar(request, id):
             model_instance = form.save(commit=False)
             model_instance.usuario = usuario_logado(request)
             model_instance.save()
-            messages.success(request, "Post salvo com sucesso")
+            texto = _("Post salvo com sucesso")
+            messages.success(request, texto)
         else:
             print(form.errors)
     return redirect('home')
@@ -111,7 +115,8 @@ def postar_editar(request, id):
 def postar_deletar(request, id):
     postagem = Postagem.objects.get(id=id)
     postagem.delete()
-    messages.success(request, "Post deletado com sucesso")
+    texto = _("Post deletado com sucesso")
+    messages.success(request, texto)
     return redirect('home')
 
 
