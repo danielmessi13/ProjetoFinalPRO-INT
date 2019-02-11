@@ -1,0 +1,21 @@
+{% load i18n %}
+<div class="panel panel-default" style="height: 150px">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">{% trans 'Indicações' %}</h3>
+    </div>
+
+    <div class="panel-body" style="overflow-y: scroll;  height: 73%">
+        <ul class="list-group">
+            {% if indicados %}
+                {% for indicado in indicados %}
+                    <li class="list-group-item" style="text-align: center">
+                        <a href="{% url 'perfil_usuario' indicado.id %}">{{ indicado.nome }}</a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <h3>{% trans 'Sem indicações' %}</h3>
+            {% endif %}
+        </ul>
+    </div>
+</div>

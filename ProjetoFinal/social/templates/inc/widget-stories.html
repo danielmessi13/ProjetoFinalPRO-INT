@@ -1,3 +1,4 @@
+{% load i18n %}
 <head>
     <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script>
     <script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script>
@@ -140,7 +141,7 @@
             </div>
 
             {% else %}
-            <h4>Não há stories :(  </h4>
+            <h4>{% trans 'Não há stories :(' %}  </h4>
         {% endif %}
 
     </div>

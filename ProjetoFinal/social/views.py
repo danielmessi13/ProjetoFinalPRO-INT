@@ -17,6 +17,7 @@ from social.serializers import PostagemSerializer
 from .forms import *
 from django.db import transaction
 import time
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
@@ -55,15 +56,28 @@ def index(request):
     paginator = Paginator(usuario_logado(request).timeline(), 10)
     usuario = usuario_logado(request)
     stories = []
+    indicados = []
 
     for amigo in usuario.amigos.all():
         stories.append(amigo.stories_usuario.all())
+
+    for a in usuario.amigos.all():
+        if len(indicados) > 5:
+            break
+        for i in a.amigos.all():
+            if len(indicados) > 5:
+                break
+
+            if i not in indicados and i not in usuario.amigos.all() and i != usuario and i not in usuario.bloqueados.all() and not usuario.convites_feitos.all().filter(
+                    solicitante=usuario, convidado=i):
+                indicados.append(i)
 
     page = request.GET.get('page')
     lista = paginator.get_page(page)
 
     return render(request, 'home.html',
-                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories})
+                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                   'indicados': indicados})
 
 
 @login_required
@@ -76,7 +90,8 @@ def postar(request):
             model_instance.usuario = usuario_logado(request)
             model_instance.save()
             tipo = request.POST['tipo']
-            messages.success(request, "Post criado com sucesso")
+            texto1 = _("Post criado com sucesso")
+            messages.success(request, texto1)
             if tipo:
                 if tipo == 'P':
                     request.FILES['arquivo'] = request.FILES['pdf']
@@ -91,7 +106,8 @@ def postar(request):
                     print(anexo.errors)
         else:
             print(form.errors)
-            messages.error(request, "Erro ao criar o post")
+            texto = _("Erro ao criar o post")
+            messages.error(request, texto)
 
     return redirect('home')
 
@@ -106,7 +122,8 @@ def postar_editar(request, id):
             model_instance = form.save(commit=False)
             model_instance.usuario = usuario_logado(request)
             model_instance.save()
-            messages.success(request, "Post salvo com sucesso")
+            texto = _("Post salvo com sucesso")
+            messages.success(request, texto)
         else:
             print(form.errors)
     return redirect('home')
@@ -117,7 +134,8 @@ def postar_editar(request, id):
 def postar_deletar(request, id):
     postagem = Postagem.objects.get(id=id)
     postagem.delete()
-    messages.success(request, "Post deletado com sucesso")
+    texto = _("Post deletado com sucesso")
+    messages.success(request, texto)
     return redirect('home')
 
 
