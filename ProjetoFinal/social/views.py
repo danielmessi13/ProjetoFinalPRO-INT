@@ -4,22 +4,44 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
+from pytz import unicode
 from rest_framework import generics
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import authentication_classes, api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from rest_framework.reverse import reverse
+
 
 from social.serializers import PostagemSerializer
 from .forms import *
 from django.db import transaction
 import time
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 
 # Create your views here.
+
+@api_view(['GET'])
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
+def example_view(request, format=None):
+    token = Token.objects.get_or_create(user=request.user)
+    print(token )
+    content = {
+        'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+        'auth': unicode(request.auth),  # None
+    }
+    return Response(content)
+
+
 class ListarPostagens(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Postagem.objects.all()
     serializer_class = PostagemSerializer
     name = 'usuario-list'
-
 
 
 @login_required
@@ -348,5 +370,3 @@ def desativar(request):
             return redirect('logout')
 
     return render(request, 'desativar.html')
-
-
