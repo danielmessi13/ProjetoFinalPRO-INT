@@ -1,3 +1,4 @@
+{% load i18n %}
 <form action="{% url 'pesquisar_amigo' %}" style="padding: 19px 15px; ">
-    <input name="q" class="form-control" placeholder="Encontrar Amigo">
+    <input name="q" class="form-control" placeholder="{% trans 'Encontrar Amigo' %}">
 </form>

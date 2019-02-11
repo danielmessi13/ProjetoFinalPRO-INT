@@ -4,9 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
+from rest_framework import generics
+
 from .forms import *
 from django.db import transaction
 import time
+from social.serializers import *
 
 
 # Create your views here.
@@ -337,3 +340,10 @@ def desativar(request):
             return redirect('logout')
 
     return render(request, 'desativar.html')
+
+
+
+class ListarUsuarios(generics.ListCreateAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+    name = 'usuario-list'

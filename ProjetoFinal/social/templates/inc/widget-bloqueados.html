@@ -1,14 +1,15 @@
 {% load static %}
+{% load i18n %}
 <div class="panel panel-default friends" style="height: 150px">
     <div class="panel-heading">
-        <h3 class="panel-title">Amigos bloqueados</h3>
+        <h3 class="panel-title">{% trans 'Amigos bloqueados' %}</h3>
     </div>
 
     <ul class="list-group" style=" overflow-y: scroll; height: 73%" >
         {% for bloqueado in request.user.perfil.bloqueados.all %}
             <li class="list-group-item">
                 <span class="">{{ bloqueado.nome }} </span>
-                <a href="{% url 'desbloquear' bloqueado.id %}" class="badge" style="background: #93291E; float: right">Desbloquear</a>
+                <a href="{% url 'desbloquear' bloqueado.id %}" class="badge" style="background: #93291E; float: right">{% trans 'Desbloquear' %}</a>
             </li>
         {% endfor %}
     </ul>

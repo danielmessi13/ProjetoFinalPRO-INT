@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block body %}
+{% load i18n %}
 <section>
     <div class="container">
         <div class="row">
-            <h3 class="" style="margin: 0;">Alterar senha</h3>
+            <h3 class="" style="margin: 0;">{% trans 'Alterar senha' %}</h3>
             <hr>
         {% include 'inc/widget-alterar-senha.html' %}
     </div>

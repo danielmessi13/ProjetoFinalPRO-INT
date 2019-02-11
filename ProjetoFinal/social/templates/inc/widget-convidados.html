@@ -1,6 +1,7 @@
+{% load i18n %}
 <div class="panel panel-default friends" style="height: 150px">
         <div class="panel-heading">
-            <h3 class="panel-title">Convites feitos</h3>
+            <h3 class="panel-title">{% trans 'Convites feitos' %}</h3>
         </div>
 
         <div class="panel-body" style="overflow-y: scroll;  height: 78%">
@@ -14,7 +15,7 @@
                     </li>
                 {% endfor %}
             {% else %}
-                <h3>Não há convites pendentes :)</h3>
+                <h3>{% trans 'Não há convites pendentes :)' %}</h3>
             {% endif %}
         </ul>
         </div>

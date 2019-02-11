@@ -1,35 +1,36 @@
 {% extends 'base.html' %}
 {% block body %}
+{% load i18n %}
     <form action="{% url 'cadastrar' %}" method="post" class="form-signin">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Crie seu usuário</h2>
+        <h2 class="form-signin-heading">{% trans 'Crie seu usuário' %}</h2>
         <div class="form-group">
-            <input id="id_nome" name="nome" type="text" placeholder="Nome *" class="form-control" required autofocus>
+            <input id="id_nome" name="nome" type="text" placeholder="{% trans 'Nome *' %}" class="form-control" required autofocus>
         </div>
 
         <div class="form-group">
             <select class="form-control" name="sexo" required>
-                <option value="M">Masculino</option>
-                <option value="F">Feminino</option>
-                <option value="O">Outro</option>
+                <option value="M">{% trans 'Masculino' %}</option>
+                <option value="F">{% trans 'Feminino' %}</option>
+                <option value="O">{% trans 'Outro' %}</option>
             </select>
         </div>
         <div class="form-group">
-            <input id="id_email" name="email" type="email" placeholder="Email *" class="form-control" required>
+            <input id="id_email" name="email" type="email" placeholder= "{% trans 'Email *' %}" class="form-control" required>
         </div>
         <div class="form-group">
-            <input id="id_senha" name="senha" type="password" placeholder="Senha *" class="form-control" required>
+            <input id="id_senha" name="senha" type="password" placeholder="{% trans 'Senha *' %}" class="form-control" required>
         </div>
 
 
         <hr/>
         <div class="form-group">
-            <input id="id_fone" name="telefone" type="tel" placeholder="Telefone *" class="form-control" required>
+            <input id="id_fone" name="telefone" type="tel" placeholder="{% trans 'Telefone *' %}" class="form-control" required>
         </div>
 
 
         <div class="form-group">
-            <button type="submit" value="Login" class="btn btn-primary btn-block">Cadastrar</button>
+            <button type="submit" value="Login" class="btn btn-primary btn-block">{% trans 'Cadastrar' %}</button>
         </div>
 
 
@@ -48,7 +49,7 @@
             </div>
         {% endif %}
 
-        <a href="{% url 'login' %}">Já possuo uma conta</a>
+        <a href="{% url 'login' %}">{% trans 'Já possuo uma conta' %}</a>
 
     </form>
 {% endblock %}
