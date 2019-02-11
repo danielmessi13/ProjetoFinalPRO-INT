@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel panel-body">
@@ -7,10 +8,10 @@
                 {{ form_editar.as_p }}
 
                 <button class="btn btn-lg btn-primary btn-block"
-                        type="submit" onclick="return alert('Perfil editado com sucesso!')" value="Editar">Editar
+                        type="submit" onclick="return alert('{% trans \'Perfil editado com sucesso!\' %}')" value="Editar">{% trans 'Editar' %}
                 </button>
                 <a class="btn btn-lg btn-warning btn-block"
-                        href="{% url 'alterar_senha' %}">Alterar senha
+                        href="{% url 'alterar_senha' %}">{% trans 'Alterar senha' %}
                 </a>
 
                 {% if form_editar.errors %}

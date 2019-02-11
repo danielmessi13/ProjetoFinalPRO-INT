@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block body %}
+{% load i18n %}
 
 <section>
     <div class="container">
@@ -34,20 +35,20 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Publicações</h3>
+                        <h3 class="panel-title">{% trans 'Publicações' %}</h3>
                     </div>
                     <div class="panel-body">
                         <form action="{% url 'postar' %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <textarea name="texto" required class="form-control input-lg p-text-area" rows="2"
-                                      placeholder="O que você está pensando hoje, {{ request.user.perfil.nome }}?"></textarea>
+                                      placeholder="{% blocktrans with name=request.user.perfil.nome %}O que você está pensando hoje, {{ name }}? {% endblocktrans %}"></textarea>
                             <input name="tipo" type="hidden" id="tipo_anexo" value="False">
                             <div class="modal fade" id="anexo" tabindex="-1" role="dialog"
                                  aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="myModalLabel">Anexar PDF</h4>
+                                            <h4 class="modal-title" id="myModalLabel">{% trans 'Anexar PDF' %}</h4>
                                         </div>
                                         <div class="modal-body">
                                             <input type="file" name="pdf" class="form-control">
@@ -66,7 +67,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Anexar Imagem</h4>
+                                            <h4 class="modal-title">{% trans 'Anexar Imagem' %}</h4>
                                         </div>
                                         <div class="modal-body">
                                             <input type="file" name="imagem" class="form-control">
@@ -81,7 +82,7 @@
                             </div>
 
                             <div class="box-footer box-form">
-                                <button onclick="myFunction()" type="submit" class="btn btn-success pull-right">Postar</button>
+                                <button onclick="myFunction()" type="submit" class="btn btn-success pull-right">{% trans 'Postar  ' %}</button>
                                 <ul class="nav nav-pills">
                                     <li><a href="#" onclick="setTipo('P')" data-toggle="modal" data-target="#anexo"><i
                                             class="fa fa-file-pdf"></i></a>

@@ -1,8 +1,9 @@
+{% load i18n %}
 <aside>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Amigos</h3>
+            <h3 class="panel-title">{% trans 'Amigos' %}</h3>
         </div>
 
         <div class="panel-body" style="overflow-y: scroll; height: 135px">
@@ -14,7 +15,7 @@
                         </li>
                     {% endfor %}
                 {% else %}
-                    <h3>Você não tem amigos :(</h3>
+                    <h3>{% trans 'Você não tem amigos :(' %}</h3>
                 {% endif %}
             </ul>
         </div>

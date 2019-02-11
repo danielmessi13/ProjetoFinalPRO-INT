@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
+{% load i18n %}
 <form class="form-signin" role="form"
       action="{% url 'login' %}" method="post">
     {% csrf_token %}
@@ -8,7 +9,7 @@
            class="form-control" placeholder="Email" required autofocus>
 
     <input type="password" id="id_password" name="password"
-           class="form-control" placeholder="Senha" required>
+           class="form-control" placeholder="{% trans 'Senha' %}" required>
 
     <button class="btn btn-lg btn-primary btn-block"
             type="submit" value="Login">Login
@@ -20,7 +21,7 @@
                 data-dismiss="alert" aria-hidden="true">×
         </button>
 
-        Por favor, verifique o Email e/ou Senha informados
+        {% trans 'Por favor, verifique o Email e/ou Senha informados' %}
     </div>
     {% endif %}
 
@@ -37,9 +38,9 @@
     {% endif %}
 
 
-    <a href="{% url 'cadastrar' %}">Registre-se</a>
-    <a style="margin-left: 100px;" href="{% url 'password_reset' %}">Esqueceu
-        a senha?</a>
+    <a href="{% url 'cadastrar' %}">{% trans 'Registre-se' %}</a>
+    <a style="margin-left: 50px;" href="{% url 'password_reset' %}">{% trans 'Esqueceu a senha?' %}
+        </a>
 
 </form>
 {% endblock %}

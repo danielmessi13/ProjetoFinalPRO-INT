@@ -1,0 +1,346 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-11 02:52-0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\Fakebook\settings.py:116
+msgid "English"
+msgstr ""
+
+#: .\Fakebook\settings.py:117
+msgid "Brazilian portuguese"
+msgstr ""
+
+#: .\social\templates\alterar_senha.html:7
+#: .\social\templates\inc\widget-editar-usuario.html:14
+#: .\social\templates\inc\widget-perfil.html:4
+#: .\social\templates\password_reset_confirm.html:8
+msgid "Alterar senha"
+msgstr "Change Password"
+
+#: .\social\templates\base.html:57
+msgid "Editar perfil"
+msgstr "Edit profile"
+
+#: .\social\templates\base.html:58 .\social\templates\desativar.html:11
+msgid "Desativar perfil"
+msgstr "Enable profile"
+
+#: .\social\templates\base.html:60
+msgid "Listar usuarios "
+msgstr "List users"
+
+#: .\social\templates\base.html:62
+msgid "Sair"
+msgstr "Exit"
+
+#: .\social\templates\base.html:80
+msgid "Confirma"
+msgstr "Confirm"
+
+#: .\social\templates\base.html:89
+msgid "Não"
+msgstr "No"
+
+#: .\social\templates\base.html:90
+msgid "Sim"
+msgstr "Yes"
+
+#: .\social\templates\desativar.html:15
+msgid "Motivo"
+msgstr "Reason"
+
+#: .\social\templates\desativar.html:18
+msgid "Desativar"
+msgstr "Disable"
+
+#: .\social\templates\forbidden.html:6
+msgid "Você não tem acesso ao painel de controle do super usuario!!"
+msgstr "You do not have access to the super user control panel"
+
+#: .\social\templates\home.html:37
+msgid "Publicações"
+msgstr "News"
+
+#: .\social\templates\home.html:43
+#, python-format
+msgid "O que você está pensando hoje, %(name)s? "
+msgstr "What are you thinking about today, %(name)s? "
+
+#: .\social\templates\home.html:50
+msgid "Anexar PDF"
+msgstr "Attach PDF"
+
+#: .\social\templates\home.html:69
+msgid "Anexar Imagem"
+msgstr "Attach Image"
+
+#: .\social\templates\home.html:84
+msgid "Postar  "
+msgstr "Post"
+
+#: .\social\templates\inc\widget-amigos.html:6
+msgid "Amigos"
+msgstr "Friends"
+
+#: .\social\templates\inc\widget-amigos.html:18
+msgid "Você não tem amigos :("
+msgstr "You do not have friends :("
+
+#: .\social\templates\inc\widget-bloqueados.html:5
+msgid "Amigos bloqueados"
+msgstr "Blocked friends"
+
+#: .\social\templates\inc\widget-bloqueados.html:12
+msgid "Desbloquear"
+msgstr "Unlock"
+
+#: .\social\templates\inc\widget-convidados.html:4
+msgid "Convites feitos"
+msgstr "Invitations made"
+
+#: .\social\templates\inc\widget-convidados.html:18
+msgid "Não há convites pendentes :)"
+msgstr "There are no pending invitations :)"
+
+#: .\social\templates\inc\widget-convites.html:5
+msgid "Convites recebidos"
+msgstr "Invitations Received"
+
+#: .\social\templates\inc\widget-convites.html:17
+msgid "Não há convites :("
+msgstr "There are no invitations :("
+
+#: .\social\templates\inc\widget-editar-usuario.html:11
+msgid "Editar"
+msgstr "Send"
+
+#: .\social\templates\inc\widget-paginator.html:8
+#: .\social\templates\inc\widget-paginator.html:13
+msgid "Primeira"
+msgstr "First"
+
+#: .\social\templates\inc\widget-paginator.html:10
+#: .\social\templates\inc\widget-paginator.html:14
+msgid "Anterior"
+msgstr "Change"
+
+#: .\social\templates\inc\widget-paginator.html:18
+#: .\social\templates\inc\widget-paginator.html:22
+msgid "Proxima"
+msgstr "Next"
+
+#: .\social\templates\inc\widget-paginator.html:19
+#: .\social\templates\inc\widget-paginator.html:24
+msgid "Ultima"
+msgstr "Last"
+
+#: .\social\templates\inc\widget-photo-perfil.html:13
+msgid "Alterar foto"
+msgstr "Change"
+
+#: .\social\templates\inc\widget-photo-perfil.html:22
+msgid "Anexar Foto"
+msgstr "Attach PDF"
+
+#: .\social\templates\inc\widget-photo-perfil.html:31
+msgid "Alterar"
+msgstr "Change"
+
+#: .\social\templates\inc\widget-procurar-amigo.html:3
+msgid "Encontrar Amigo"
+msgstr "Find a friend"
+
+#: .\social\templates\inc\widget-timeline.html:18
+#: .\social\templates\inc\widget-timeline.html:65
+#, python-format
+msgid "Deseja deletar a postagem %(name)s?"
+msgstr "Do you want to delete the post, %(name)s?"
+
+#: .\social\templates\inc\widget-timeline.html:19
+#: .\social\templates\inc\widget-timeline.html:66
+msgid "deletar_postagem"
+msgstr "delete post"
+
+#: .\social\templates\inc\widget-timeline.html:30
+msgid "Anexo"
+msgstr "Sex"
+
+#: .\social\templates\inc\widget-timeline.html:40
+#: .\social\templates\inc\widget-timeline.html:89
+msgid "Compartilhar"
+msgstr "Share"
+
+#: .\social\templates\inc\widget-timeline.html:42
+#: .\social\templates\inc\widget-timeline.html:92
+msgid "Gostei"
+msgstr "Like"
+
+#: .\social\templates\inc\widget-timeline.html:78
+msgid " Anexo"
+msgstr "Sex"
+
+#: .\social\templates\password_reset_complete.html:11
+msgid "Sua senha já foi alterada você já pode realizar o seu"
+msgstr "Your password has already been changed, you can"
+
+#: .\social\templates\password_reset_complete.html:11
+msgid "agora."
+msgstr "now"
+
+#: .\social\templates\password_reset_confirm.html:24
+msgid "Mudar senha"
+msgstr "Change Password"
+
+#: .\social\templates\password_reset_confirm.html:28
+msgid ""
+"O link para recuperar a senha é invalido, possivelmente porque voce já tenha "
+"usado."
+msgstr ""
+"The link to recover the password is invalid, possibly because you have "
+"already used it."
+
+#: .\social\templates\password_reset_done.html:6
+msgid ""
+"Foi enviado um link para re-definir a sua senha, se existir uma conta com o "
+"email que você inseriu. Você deve recebê-lo em breve."
+msgstr ""
+"A link has been sent to re-set your password, if there is an account with "
+"the email you entered. You should receive it soon."
+
+#: .\social\templates\password_reset_done.html:9
+msgid ""
+"Se você não receber um e-mail, verifique se inseriu o endereço com o qual se "
+"registrou e/ou verifique sua pasta de spam."
+msgstr ""
+"If you do not receive an email, make sure you've entered the address you "
+"registered with and / or checked your spam folder."
+
+#: .\social\templates\password_reset_form.html:12
+msgid "Digite seu email"
+msgstr "Type your e-mail"
+
+#: .\social\templates\password_reset_form.html:23
+msgid "Enviar"
+msgstr "Send"
+
+#: .\social\templates\password_reset_form.html:32
+msgid "Por favor, verifique o Email"
+msgstr "Please, check the reported data"
+
+#: .\usuarios\forms.py:22
+msgid "Nome"
+msgstr "Name"
+
+#: .\usuarios\forms.py:23
+msgid "Email"
+msgstr ""
+
+#: .\usuarios\forms.py:24 .\usuarios\templates\login.html:12
+msgid "Senha"
+msgstr "Password"
+
+#: .\usuarios\forms.py:25
+msgid "Telefone"
+msgstr "Fone"
+
+#: .\usuarios\forms.py:26
+msgid "Sexo"
+msgstr "Sex"
+
+#: .\usuarios\forms.py:31
+msgid "Por favor, verifique os dados informados"
+msgstr "Please, check the reported data"
+
+#: .\usuarios\forms.py:36
+msgid "Usuario já existe"
+msgstr "User already exists"
+
+#: .\usuarios\templates\ativar_perfil.html:8
+msgid "Ativar perfil"
+msgstr "Enable profile"
+
+#: .\usuarios\templates\ativar_perfil.html:15
+msgid "Sem foto"
+msgstr "No picture"
+
+#: .\usuarios\templates\ativar_perfil.html:26
+msgid "Ativar conta"
+msgstr "Enable account"
+
+#: .\usuarios\templates\listar_usuarios.html:10
+msgid "Tonar/Retirar poder de super usuario"
+msgstr "Turn or Remove superuser power"
+
+#: .\usuarios\templates\listar_usuarios.html:24
+msgid "Tornar Super"
+msgstr "Make Super"
+
+#: .\usuarios\templates\listar_usuarios.html:29
+msgid "Não há usuarios cadastrados :("
+msgstr "No registered users :("
+
+#: .\usuarios\templates\login.html:24
+msgid "Por favor, verifique o Email e/ou Senha informados"
+msgstr "Please, check the reported data"
+
+#: .\usuarios\templates\login.html:41
+msgid "Registre-se"
+msgstr "Create an account"
+
+#: .\usuarios\templates\login.html:42
+msgid "Esqueceu a senha?"
+msgstr "Forgot password?"
+
+#: .\usuarios\templates\registrar.html:6
+msgid "Crie seu usuário"
+msgstr "Create your user"
+
+#: .\usuarios\templates\registrar.html:8
+msgid "Nome *"
+msgstr "Name *"
+
+#: .\usuarios\templates\registrar.html:13
+msgid "Masculino"
+msgstr "Male"
+
+#: .\usuarios\templates\registrar.html:14
+msgid "Feminino"
+msgstr "Female"
+
+#: .\usuarios\templates\registrar.html:15
+msgid "Outro"
+msgstr "Other"
+
+#: .\usuarios\templates\registrar.html:19
+msgid "Email *"
+msgstr "Email *"
+
+#: .\usuarios\templates\registrar.html:22
+msgid "Senha *"
+msgstr "Password *"
+
+#: .\usuarios\templates\registrar.html:28
+msgid "Telefone *"
+msgstr "Fone *"
+
+#: .\usuarios\templates\registrar.html:33
+msgid "Cadastrar"
+msgstr "Register"
+
+#: .\usuarios\templates\registrar.html:52
+msgid "Já possuo uma conta"
+msgstr "I already have an account"

@@ -1,5 +1,5 @@
 
-
+{% load i18n %}
 {% for postagem in lista %}
 
     {#            Significa que ele ta na timelina normal #}
@@ -15,8 +15,8 @@
                         <span class="actions">
                                 <a class="text-danger action"
                                    param="{{ postagem.id }}"
-                                   data-msg="Deseja deletar a postagem '{{ postagem.texto }}' ?"
-                                   positive="deletar_postagem"><i class="fa fa-trash"></i></a>
+                                   data-msg="{% blocktrans with name=postagem.texto %}Deseja deletar a postagem {{ name }}?{% endblocktrans %}"
+                                   positive="{% trans 'deletar_postagem' %}"><i class="fa fa-trash"></i></a>
                             </span>
                     {% endif %}
                 </div>
@@ -27,7 +27,7 @@
                     {% for anexo in postagem.anexo_postagem.all %}
                         {% if anexo.tipo == 'P' %}
                             <p><a target="_blank" href="{{ anexo.arquivo.url }}"><i class="fa fa-file-pdf"></i>
-                                Anexo</a>
+                                {% trans 'Anexo' %}</a>
                             </p>
                         {% elif anexo.tipo == 'I' %}
                             <img class="img-responsive show-in-modal"
@@ -37,9 +37,9 @@
                     {% endfor %}
                 {% endif %}
                 <br>
-                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Compartilhar
+                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i>{% trans 'Compartilhar' %}
                 </button>
-                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Gostei
+                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i>{% trans 'Gostei' %}
                 </button>
                 <span class="pull-right text-muted"></span>
             </div>
@@ -62,8 +62,8 @@
                                 <span class="actions">
                                 <a class="text-danger action"
                                    param="{{ postagem.id }}"
-                                   data-msg="Deseja deletar a postagem '{{ postagem.texto }}' ?"
-                                   positive="deletar_postagem"><i class="fa fa-trash"></i></a>
+                                   data-msg="{% blocktrans with name=postagem.texto %}Deseja deletar a postagem {{ name }}?{% endblocktrans %}"
+                                   positive="{% trans 'deletar_postagem' %}"><i class="fa fa-trash"></i></a>
                             </span>
                             {% endif %}
                         </div>
@@ -75,7 +75,7 @@
                                 {% if anexo.tipo == 'P' %}
                                     <p><a target="_blank" href="{{ anexo.arquivo.url }}"><i
                                             class="fa fa-file-pdf"></i>
-                                        Anexo</a>
+                                       {% trans ' Anexo' %}</a>
                                     </p>
                                 {% elif anexo.tipo == 'I' %}
                                     <img class="img-responsive show-in-modal"
@@ -86,10 +86,10 @@
                         {% endif %}
                         <br>
                         <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i>
-                            Compartilhar
+                            {% trans 'Compartilhar' %}
                         </button>
                         <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i>
-                            Gostei
+                            {% trans 'Gostei' %}
                         </button>
                         <span class="pull-right text-muted"></span>
                     </div>

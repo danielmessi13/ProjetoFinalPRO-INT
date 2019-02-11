@@ -2,19 +2,20 @@
 {% load static %}
 
 {% block body %}
+{% load i18n %}
 
     <div class="col-md-4"></div>
     <div class="col-md-4">
         <form action="{% url 'desativar_perfil' %}" method="post">
             {% csrf_token %}
-            <h3 class="" style="margin: 2%;">Desativar perfil</h3>
+            <h3 class="" style="margin: 2%;">{% trans 'Desativar perfil' %}</h3>
             <hr>
 
             <div class="form-group">
-                <input id="id_motivo" name="motivo" type="text" placeholder="Motivo" class="form-control">
+                <input id="id_motivo" name="motivo" type="text" placeholder="{% trans 'Motivo' %}" class="form-control">
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Desativar</button>
+            <button type="submit" class="btn btn-primary btn-block">{% trans 'Desativar' %}</button>
 
 
         </form>

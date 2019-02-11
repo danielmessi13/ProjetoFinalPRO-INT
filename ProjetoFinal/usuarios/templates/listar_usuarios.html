@@ -2,11 +2,12 @@
 {% load static %}
 
 {% block body%}
+{% load i18n %}
 
 <div class="col-md-1"></div>
 <div class="col-md-10">
     <div class="panel panel-body">
-        <h3 class="" style="margin: 0;">Tonar/Retirar poder de super usuario</h3>
+        <h3 class="" style="margin: 0;">{% trans 'Tonar/Retirar poder de super usuario' %}</h3>
             <hr>
         <div class="panel panel-info">
             <ul class="list-group">
@@ -16,17 +17,16 @@
                     <a href="{% url 'perfil_usuario' usuario.id %}">{{usuario.nome}}</a>
                     {% if usuario.user.is_superuser %}
                     <input class="pull-right " style="margin-left:5px" type="checkbox" disabled checked name="" id="1">
-                    <a href="{% url 'mudar' usuario.id %}" class="badge badge-primary badge-pill pull-right" style="background: #491217">Retirar
-                        super</a>
+                    <a href="{% url 'mudar' usuario.id %}" class="badge badge-primary badge-pill pull-right" style="background: #491217">{% trans 'Retirar
+                        super' %}</a>
                     {% else %}
                     <input class="pull-right " style="margin-left:5px" type="checkbox" disabled name="" id="2">
-                    <a href="{% url 'mudar' usuario.id %}" class="badge badge-primary badge-pill pull-right" style="background: #491217">Tornar
-                        super</a>
+                    <a href="{% url 'mudar' usuario.id %}" class="badge badge-primary badge-pill pull-right" style="background: #491217">{% trans 'Tornar Super' %}</a>
                     {% endif %}
                 </li>
                 {% endfor %}
                 {% else %}
-                <h2>Não há usuarios cadastrados :(</h2>
+                <h2>{% trans 'Não há usuarios cadastrados :(' %}</h2>
                 {% endif %}
             </ul>
         </div>
