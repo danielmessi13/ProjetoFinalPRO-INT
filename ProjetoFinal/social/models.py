@@ -44,7 +44,7 @@ class Usuario(models.Model):
         return self.user.username
 
     def desativar(self, motivo):
-        Desativo.objects.create(user=self,motivo=motivo)
+        Desativo.objects.create(user=self, motivo=motivo)
         self.user.is_active = 0
         self.user.save()
 
@@ -53,6 +53,12 @@ class Usuario(models.Model):
         self.desativacao.delete()
         self.user.is_active = 1
         self.user.save()
+
+
+class Storie(models.Model):
+    stories = models.ImageField(upload_to='stories')
+    usuario = models.ForeignKey(Usuario, related_name='stories_usuario', on_delete=models.CASCADE)
+    data = models.DateTimeField(default=timezone.now)
 
 
 class Anexo(models.Model):

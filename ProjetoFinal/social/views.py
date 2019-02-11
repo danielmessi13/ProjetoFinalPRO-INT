@@ -53,11 +53,17 @@ class PostagemDetail(generics.RetrieveUpdateDestroyAPIView):
 @login_required
 def index(request):
     paginator = Paginator(usuario_logado(request).timeline(), 10)
+    usuario = usuario_logado(request)
+    stories = []
+
+    for amigo in usuario.amigos.all():
+        stories.append(amigo.stories_usuario.all())
+
     page = request.GET.get('page')
     lista = paginator.get_page(page)
 
     return render(request, 'home.html',
-                  {'lista': lista, 'usuario': usuario_logado(request), 'pages': paginator.num_pages})
+                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories})
 
 
 @login_required
