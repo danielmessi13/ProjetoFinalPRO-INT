@@ -8,11 +8,10 @@ from pytz import unicode
 from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.decorators import authentication_classes, api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.reverse import reverse
-
 
 from social.serializers import PostagemSerializer
 from .forms import *
@@ -24,24 +23,31 @@ from rest_framework.authtoken.models import Token
 
 # Create your views here.
 
-@api_view(['GET'])
-@authentication_classes((SessionAuthentication, BasicAuthentication))
-@permission_classes((IsAuthenticated,))
-def example_view(request, format=None):
-    token = Token.objects.get_or_create(user=request.user)
-    print(token )
-    content = {
-        'user': unicode(request.user),  # `django.contrib.auth.User` instance.
-        'auth': unicode(request.auth),  # None
-    }
-    return Response(content)
+# @api_view(['GET'])
+# @authentication_classes((SessionAuthentication, BasicAuthentication))
+# @permission_classes((IsAuthenticated,))
+# def example_view(request, format=None):
+#     token = Token.objects.get_or_create(user=request.user)
+#     print(token )
+#     content = {
+#         'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+#         'auth': unicode(request.auth),  # None
+#     }
+#     return Response(content)
 
 
-class ListarPostagens(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+class PostagemList(generics.ListCreateAPIView):
+    permission_classes = (IsAdminUser,)
     queryset = Postagem.objects.all()
     serializer_class = PostagemSerializer
-    name = 'usuario-list'
+    name = 'postagem-list'
+
+
+class PostagemDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAdminUser,)
+    queryset = Postagem.objects.all()
+    serializer_class = PostagemSerializer
+    name = 'postagem-detail'
 
 
 @login_required
@@ -351,8 +357,10 @@ def super_mudanca(request, id):
     usuario = Usuario.objects.get(id=id)
     if usuario.user.is_superuser:
         usuario.user.is_superuser = False
+        usuario.user.is_staff = False
     else:
         usuario.user.is_superuser = True
+        usuario.user.is_staff = True
     usuario.user.save()
 
     return redirect('listar')
