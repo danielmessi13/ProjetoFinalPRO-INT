@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 03:36-0200\n"
+"POT-Creation-Date: 2019-02-11 18:06-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\Fakebook\settings.py:124
+#: .\Fakebook\settings.py:123
 msgid "English"
 msgstr ""
 
-#: .\Fakebook\settings.py:125
+#: .\Fakebook\settings.py:124
 msgid "Brazilian portuguese"
 msgstr "Português do Brasil"
 
@@ -71,24 +71,24 @@ msgstr ""
 msgid "Você não tem acesso ao painel de controle do super usuario!!"
 msgstr ""
 
-#: .\social\templates\home.html:37
+#: .\social\templates\home.html:38
 msgid "Publicações"
 msgstr ""
 
-#: .\social\templates\home.html:43
+#: .\social\templates\home.html:44
 #, python-format
 msgid "O que você está pensando hoje, %(name)s? "
 msgstr ""
 
-#: .\social\templates\home.html:50
+#: .\social\templates\home.html:51
 msgid "Anexar PDF"
 msgstr ""
 
-#: .\social\templates\home.html:69
+#: .\social\templates\home.html:70
 msgid "Anexar Imagem"
 msgstr ""
 
-#: .\social\templates\home.html:84
+#: .\social\templates\home.html:85
 msgid "Postar  "
 msgstr ""
 
@@ -128,6 +128,14 @@ msgstr ""
 msgid "Editar"
 msgstr ""
 
+#: .\social\templates\inc\widget-indicar-amigos.html:5
+msgid "Indicações"
+msgstr ""
+
+#: .\social\templates\inc\widget-indicar-amigos.html:17
+msgid "Sem indicações"
+msgstr ""
+
 #: .\social\templates\inc\widget-paginator.html:8
 #: .\social\templates\inc\widget-paginator.html:13
 msgid "Primeira"
@@ -162,6 +170,10 @@ msgstr ""
 
 #: .\social\templates\inc\widget-procurar-amigo.html:3
 msgid "Encontrar Amigo"
+msgstr ""
+
+#: .\social\templates\inc\widget-stories.html:144
+msgid "Não há stories :("
 msgstr ""
 
 #: .\social\templates\inc\widget-timeline.html:18
@@ -235,19 +247,60 @@ msgstr ""
 msgid "Por favor, verifique o Email"
 msgstr ""
 
-#: .\social\views.py:74
+#: .\social\templates\perfil_usuario.html:10
+msgid "Convidando usuario.."
+msgstr ""
+
+#: .\social\templates\perfil_usuario.html:33
+msgid "Desfazer amizade"
+msgstr ""
+
+#: .\social\templates\perfil_usuario.html:35
+#: .\social\templates\perfil_usuario.html:63
+msgid "Bloquear"
+msgstr ""
+
+#: .\social\templates\perfil_usuario.html:42
+msgid "Aceitar convite"
+msgstr ""
+
+#: .\social\templates\perfil_usuario.html:45
+msgid "Rejeitar convite"
+msgstr ""
+
+#: .\social\templates\perfil_usuario.html:51
+msgid "Cancelar convite"
+msgstr ""
+
+#: .\social\templates\perfil_usuario.html:59
+msgid "Convidar"
+msgstr ""
+
+#: .\social\templates\perfil_usuario.html:80
+msgid "Perfil inativo"
+msgstr ""
+
+#: .\social\templates\pesquisa.html:12
+msgid "Resultado da pesquisa por"
+msgstr ""
+
+#: .\social\templates\pesquisa.html:30
+msgid "Não há resultados :("
+msgstr ""
+
+#: .\social\views.py:92
 msgid "Post criado com sucesso"
 msgstr ""
 
-#: .\social\views.py:90
+#: .\social\views.py:108
 msgid "Erro ao criar o post"
 msgstr ""
 
-#: .\social\views.py:106
+#: .\social\views.py:124
 msgid "Post salvo com sucesso"
 msgstr ""
 
-#: .\social\views.py:118
+#: .\social\views.py:136
 msgid "Post deletado com sucesso"
 msgstr ""
 
