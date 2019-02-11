@@ -3,10 +3,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import *
 from usuarios.views import *
-from social.views import *
+from rest_framework.authtoken.views import obtain_auth_token
 from django.contrib.auth import views as v
 
 urlpatterns = [
+    path('token-auth/', obtain_auth_token),
     path('home/', index, name='home'),
     path('', index, name='home'),
     path('postar/', postar, name='postar'),
