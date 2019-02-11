@@ -4,15 +4,51 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
+from pytz import unicode
 from rest_framework import generics
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import authentication_classes, api_view, permission_classes
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework.reverse import reverse
 
+from social.serializers import PostagemSerializer
 from .forms import *
 from django.db import transaction
 import time
-from social.serializers import *
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 
 # Create your views here.
+
+# @api_view(['GET'])
+# @authentication_classes((SessionAuthentication, BasicAuthentication))
+# @permission_classes((IsAuthenticated,))
+# def example_view(request, format=None):
+#     token = Token.objects.get_or_create(user=request.user)
+#     print(token )
+#     content = {
+#         'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+#         'auth': unicode(request.auth),  # None
+#     }
+#     return Response(content)
+
+
+class PostagemList(generics.ListCreateAPIView):
+    permission_classes = (IsAdminUser,)
+    queryset = Postagem.objects.all()
+    serializer_class = PostagemSerializer
+    name = 'postagem-list'
+
+
+class PostagemDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAdminUser,)
+    queryset = Postagem.objects.all()
+    serializer_class = PostagemSerializer
+    name = 'postagem-detail'
+
 
 @login_required
 def index(request):
@@ -20,7 +56,8 @@ def index(request):
     page = request.GET.get('page')
     lista = paginator.get_page(page)
 
-    return render(request, 'home.html', {'lista': lista, 'usuario': usuario_logado(request), 'pages': paginator.num_pages})
+    return render(request, 'home.html',
+                  {'lista': lista, 'usuario': usuario_logado(request), 'pages': paginator.num_pages})
 
 
 @login_required
@@ -33,7 +70,7 @@ def postar(request):
             model_instance.usuario = usuario_logado(request)
             model_instance.save()
             tipo = request.POST['tipo']
-            messages.success(request,"Post criado com sucesso")
+            messages.success(request, "Post criado com sucesso")
             if tipo:
                 if tipo == 'P':
                     request.FILES['arquivo'] = request.FILES['pdf']
@@ -320,8 +357,10 @@ def super_mudanca(request, id):
     usuario = Usuario.objects.get(id=id)
     if usuario.user.is_superuser:
         usuario.user.is_superuser = False
+        usuario.user.is_staff = False
     else:
         usuario.user.is_superuser = True
+        usuario.user.is_staff = True
     usuario.user.save()
 
     return redirect('listar')
@@ -330,7 +369,6 @@ def super_mudanca(request, id):
 @login_required
 @transaction.atomic
 def desativar(request):
-
     if request.method == 'POST':
         form = DesativarForm(request.POST)
         if form.is_valid():
@@ -340,10 +378,3 @@ def desativar(request):
             return redirect('logout')
 
     return render(request, 'desativar.html')
-
-
-
-class ListarUsuarios(generics.ListCreateAPIView):
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
-    name = 'usuario-list'
