@@ -55,6 +55,11 @@ class Usuario(models.Model):
         self.user.save()
 
 
+class PostagemCompartilhada(models.Model):
+    usuario = models.ForeignKey(Usuario, related_name='usuario_compartilhada', on_delete=models.CASCADE)
+    postagem = models.ForeignKey('Postagem', related_name='postagem_compartilhada', on_delete=models.CASCADE)
+
+
 class Storie(models.Model):
     stories = models.ImageField(upload_to='stories')
     usuario = models.ForeignKey(Usuario, related_name='stories_usuario', on_delete=models.CASCADE)

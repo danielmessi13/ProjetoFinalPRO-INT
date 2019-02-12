@@ -37,10 +37,8 @@
                     {% endfor %}
                 {% endif %}
                 <br>
-                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i>{% trans 'Compartilhar' %}
-                </button>
-                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i>{% trans 'Gostei' %}
-                </button>
+                <button onclick="location.href='#'" class="btn btn-light btn-xs">{% trans 'Gostei' %} <i class="fa fa-thumbs-up"></i></button>
+                <button onclick="location.href='{% url 'compartilhar' postagem.id %}'"class="btn btn-light btn-xs">{% trans 'Compartilhar' %} <i class="fa fa-share"></i></button>
                 <span class="pull-right text-muted"></span>
             </div>
 
@@ -85,12 +83,8 @@
                             {% endfor %}
                         {% endif %}
                         <br>
-                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i>
-                            {% trans 'Compartilhar' %}
-                        </button>
-                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i>
-                            {% trans 'Gostei' %}
-                        </button>
+                        <button onclick="location.href='#'" class="btn btn-light btn-xs">{% trans 'Gostei' %} <i class="fa fa-thumbs-up"></i></button>
+                <button onclick="location.href='{% url 'compartilhar' postagem.id %}'"class="btn btn-light btn-xs">{% trans 'Compartilhar' %} <i class="fa fa-share"></i></button>
                         <span class="pull-right text-muted"></span>
                     </div>
 

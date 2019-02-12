@@ -52,6 +52,11 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UsuarioSerializer
     name = 'usuario-detail'
 
+@login_required
+def compartilhar(request, id):
+    postagem = Postagem.objects.get(id=id)
+    PostagemCompartilhada.objects.create(usuario=request.user.perfil,postagem=postagem)
+    return index(request)
 
 @login_required
 def index(request):

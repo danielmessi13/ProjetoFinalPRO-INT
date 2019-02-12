@@ -11,6 +11,7 @@ urlpatterns = [
     path('home/', index, name='home'),
     path('', index, name='home'),
     path('postar/', postar, name='postar'),
+    path('compartilhar/<int:id>', compartilhar, name='compartilhar'),
     path('postagem/<int:id>/editar', postar_editar, name='postagem_editar'),
     path('postagem/<int:id>/deletar', postar_deletar, name='postagem_deletar'),
     path('pesquisar/amigo', pesquisar_amigo, name='pesquisar_amigo'),
