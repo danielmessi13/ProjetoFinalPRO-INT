@@ -6,9 +6,9 @@
                   action="{% url 'editar_perfil' %}" method="post">
                 {% csrf_token %}
                 {{ form_editar.as_p }}
-
+{# tava dando pau os \\#}
                 <button class="btn btn-lg btn-primary btn-block"
-                        type="submit" onclick="return alert('{% trans \'Perfil editado com sucesso!\' %}')" value="Editar">{% trans 'Editar' %}
+                        type="submit" onclick="return alert('{% trans 'Perfil editado com sucesso!' %}')" value="Editar">{% trans 'Editar' %}
                 </button>
                 <a class="btn btn-lg btn-warning btn-block"
                         href="{% url 'alterar_senha' %}">{% trans 'Alterar senha' %}

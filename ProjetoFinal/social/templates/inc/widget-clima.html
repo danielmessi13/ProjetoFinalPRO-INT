@@ -43,7 +43,6 @@
             <div class="panel-heading">
                 <h3 class="panel-title">{% trans 'Estado' %}</h3>
             </div>
-            <label for="estado">Estado:</label>
             <select class="form-control" name="estado">
                 {% for i in estado %}
                     <option>{{ i }}</option>
@@ -52,10 +51,11 @@
             <button value="submit" class="btn btn-block btn-info" style="margin-top: 3px">Confirma</button>
 
         {% elif cidade %}
+
             <div class="panel-heading">
                 <h3 class="panel-title">{% trans 'Cidade' %}</h3>
             </div>
-            <label for="cidade">Cidade:</label>
+
             <select class="form-control" name="cidade">
                 {% for i in cidade %}
                     <option>{{ i }}</option>
