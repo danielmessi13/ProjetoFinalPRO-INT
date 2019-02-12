@@ -661,12 +661,12 @@ h1.row-title, h2.row-title, h3.row-title, h4.row-title, h5.row-title, h6.row-tit
 }
 .box {
     position: relative;
-    border-radius: 3px;
+    border-radius: 10px;
     background: #ffffff;
     border-top: 3px solid #2dc3e8;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     width: 100%;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.1);
 }
 .box-header.with-border {
     border-bottom: 1px solid #f4f4f4;

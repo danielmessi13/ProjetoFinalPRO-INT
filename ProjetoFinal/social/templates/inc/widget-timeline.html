@@ -1,17 +1,62 @@
-
 {% load i18n %}
 {% for postagem in lista %}
 
     {#            Significa que ele ta na timelina normal #}
     {% if usuario.id == request.user.perfil.id %}
-        <div class="box box-widget">
+        {% if not postagem.compartilhada %}
+            <div class="box box-widget">
+                <div class="box-header with-border">
+                    <div class="user-block">
+                        <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
+                        <span class="username"><a
+                                href="{% url 'perfil_usuario' postagem.usuario.id %}">{{ postagem.usuario.nome }}</a></span>
+                        <span class="description">{{ postagem.data }}</span>
+                        {% if postagem.usuario.id  == request.user.perfil.id  or request.user.is_superuser %}
+                            <span class="actions">
+                                <a class="text-danger action"
+                                   param="{{ postagem.id }}"
+                                   data-msg="{% blocktrans with name=postagem.texto %}Deseja deletar a postagem {{ name }}?{% endblocktrans %}"
+                                   positive="{% trans 'deletar_postagem' %}"><i class="fa fa-trash"></i></a>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="box-body">
+                    <p>{{ postagem.texto }}</p>
+                    {% if postagem.anexo_postagem %}
+                        {% for anexo in postagem.anexo_postagem.all %}
+                            {% if anexo.tipo == 'P' %}
+                                <p><a target="_blank" href="{{ anexo.arquivo.url }}"><i class="fa fa-file-pdf"></i>
+                                    {% trans 'Anexo' %}</a>
+                                </p>
+                            {% elif anexo.tipo == 'I' %}
+                                <img class="img-responsive show-in-modal"
+                                     src="{{ anexo.arquivo.url }}"
+                                     alt="Photo">
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <br>
+                    <button onclick="location.href='#'" class="btn btn-light btn-xs">{% trans 'Gostei' %} <i
+                            class="fa fa-thumbs-up"></i></button>
+                    {% if postagem.usuario.id != request.user.perfil.id %}
+                        <button onclick="location.href='{% url 'compartilhar' postagem.id %}'"
+                                class="btn btn-light btn-xs">{% trans 'Compartilhar' %} <i class="fa fa-share"></i>
+                        </button>
+                    {% endif %}
+                    <span class="pull-right text-muted"></span>
+                </div>
+
+            </div>
+        {% else %}
+            <div class="box box-widget"></div>
             <div class="box-header with-border">
                 <div class="user-block">
-                    <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
+                    <img class="img-circle" src="{{ postagem.compartilhador.foto.url }}" alt="">
                     <span class="username"><a
-                            href="{% url 'perfil_usuario' postagem.usuario.id %}">{{ postagem.usuario.nome }}</a></span>
-                    <span class="description">{{ postagem.data }}</span>
-                    {% if postagem.usuario.id  == request.user.perfil.id  or request.user.is_superuser %}
+                            href="{% url 'perfil_usuario' postagem.compartilhador.id %}">{{ postagem.compartilhador.nome }}</a></span>
+                    <span class="description">{{ postagem.data_compartilhada }}</span>
+                    {% if postagem.compartilhador.id  == request.user.perfil.id or request.user.is_superuser %}
                         <span class="actions">
                                 <a class="text-danger action"
                                    param="{{ postagem.id }}"
@@ -22,27 +67,53 @@
                 </div>
             </div>
             <div class="box-body">
-                <p>{{ postagem.texto }}</p>
-                {% if postagem.anexo_postagem %}
-                    {% for anexo in postagem.anexo_postagem.all %}
-                        {% if anexo.tipo == 'P' %}
-                            <p><a target="_blank" href="{{ anexo.arquivo.url }}"><i class="fa fa-file-pdf"></i>
-                                {% trans 'Anexo' %}</a>
-                            </p>
-                        {% elif anexo.tipo == 'I' %}
-                            <img class="img-responsive show-in-modal"
-                                 src="{{ anexo.arquivo.url }}"
-                                 alt="Photo">
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="user-block">
+                            <img class="img-circle" src="{{ postagem.usuario.foto.url }}" alt="">
+                            <span class="username"><a
+                                    href="{% url 'perfil_usuario' postagem.usuario.id %}">{{ postagem.usuario.nome }}</a></span>
+                            <span class="description">{{ postagem.data }}</span>
+                            {% if postagem.usuario.id  == request.user.perfil.id  or request.user.is_superuser %}
+                                <span class="actions">
+                                <a class="text-danger action"
+                                   param="{{ postagem.id }}"
+                                   data-msg="{% blocktrans with name=postagem.texto %}Deseja deletar a postagem {{ name }}?{% endblocktrans %}"
+                                   positive="{% trans 'deletar_postagem' %}"><i class="fa fa-trash"></i></a>
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <p>{{ postagem.texto }}</p>
+                        {% if postagem.anexo_postagem %}
+                            {% for anexo in postagem.anexo_postagem.all %}
+                                {% if anexo.tipo == 'P' %}
+                                    <p><a target="_blank" href="{{ anexo.arquivo.url }}"><i class="fa fa-file-pdf"></i>
+                                        {% trans 'Anexo' %}</a>
+                                    </p>
+                                {% elif anexo.tipo == 'I' %}
+                                    <img class="img-responsive show-in-modal"
+                                         src="{{ anexo.arquivo.url }}"
+                                         alt="Photo">
+                                {% endif %}
+                            {% endfor %}
                         {% endif %}
-                    {% endfor %}
-                {% endif %}
-                <br>
-                <button onclick="location.href='#'" class="btn btn-light btn-xs">{% trans 'Gostei' %} <i class="fa fa-thumbs-up"></i></button>
-                <button onclick="location.href='{% url 'compartilhar' postagem.id %}'"class="btn btn-light btn-xs">{% trans 'Compartilhar' %} <i class="fa fa-share"></i></button>
-                <span class="pull-right text-muted"></span>
-            </div>
+                        <br>
+                        <button onclick="location.href='#'" class="btn btn-light btn-xs">{% trans 'Gostei' %} <i
+                                class="fa fa-thumbs-up"></i></button>
+                        {% if postagem.usuario.id != request.user.perfil.id %}
+                            <button onclick="location.href='{% url 'compartilhar' postagem.id %}'"
+                                    class="btn btn-light btn-xs">{% trans 'Compartilhar' %} <i class="fa fa-share"></i>
+                            </button>
+                        {% endif %}
+                        <span class="pull-right text-muted"></span>
+                    </div>
 
-        </div>
+                </div>
+
+            </div>
+        {% endif %}
 
     {% else %}
         {#                Ta no perfil de um amigo #}
@@ -73,7 +144,7 @@
                                 {% if anexo.tipo == 'P' %}
                                     <p><a target="_blank" href="{{ anexo.arquivo.url }}"><i
                                             class="fa fa-file-pdf"></i>
-                                       {% trans ' Anexo' %}</a>
+                                        {% trans ' Anexo' %}</a>
                                     </p>
                                 {% elif anexo.tipo == 'I' %}
                                     <img class="img-responsive show-in-modal"
@@ -83,8 +154,11 @@
                             {% endfor %}
                         {% endif %}
                         <br>
-                        <button onclick="location.href='#'" class="btn btn-light btn-xs">{% trans 'Gostei' %} <i class="fa fa-thumbs-up"></i></button>
-                <button onclick="location.href='{% url 'compartilhar' postagem.id %}'"class="btn btn-light btn-xs">{% trans 'Compartilhar' %} <i class="fa fa-share"></i></button>
+                        <button onclick="location.href='#'" class="btn btn-light btn-xs">{% trans 'Gostei' %} <i
+                                class="fa fa-thumbs-up"></i></button>
+                        <button onclick="location.href='{% url 'compartilhar' postagem.id %}'"
+                                class="btn btn-light btn-xs">{% trans 'Compartilhar' %} <i class="fa fa-share"></i>
+                        </button>
                         <span class="pull-right text-muted"></span>
                     </div>
 

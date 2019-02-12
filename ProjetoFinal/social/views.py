@@ -52,22 +52,30 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UsuarioSerializer
     name = 'usuario-detail'
 
+
 @login_required
 def compartilhar(request, id):
     postagem = Postagem.objects.get(id=id)
-    PostagemCompartilhada.objects.create(usuario=request.user.perfil,postagem=postagem)
-    return index(request)
+
+    p = Postagem.objects.create(texto=postagem.texto, usuario=postagem.usuario, compartilhada=True,
+                                compartilhador=usuario_logado(request), data=postagem.data)
+
+    if postagem.anexo_postagem.all():
+        Anexo.objects.create(tipo=postagem.anexo_postagem.all()[0].tipo,
+                             arquivo=postagem.anexo_postagem.all()[0].arquivo, postagem=p)
+
+    return redirect('home')
+
 
 @login_required
 def index(request):
     paginator = Paginator(usuario_logado(request).timeline(), 10)
     usuario = usuario_logado(request)
-    stories = []
     indicados = []
     estados = []
 
-    for amigo in usuario.amigos.all():
-        stories.append(amigo.stories_usuario.all())
+    # for amigo in usuario.amigos.all():
+    #     stories.append(amigo.stories_usuario.all())
 
     for a in usuario.amigos.all():
         if len(indicados) > 5:
@@ -94,16 +102,16 @@ def index(request):
                     estados.append(i['sigla'])
 
                 return render(request, 'home.html',
-                              {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                              {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                                'indicados': indicados, 'estado': estados})
 
             except ConnectionError:
                 return render(request, 'home.html',
-                              {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                              {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                                'indicados': indicados, 'erro': True})
 
         return render(request, 'home.html',
-                      {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                      {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                        'indicados': indicados, 'erro': True})
 
     if request.method == 'POST':
@@ -133,17 +141,17 @@ def index(request):
                     txt = api_clima['data'][0]['text_icon']['text']['pt']
 
                     return render(request, 'home.html',
-                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                                    'indicados': indicados, 'min': min, 'max': max, 'txt': txt,
                                    'city': request.POST['cidade']})
 
                 except ConnectionError:
                     return render(request, 'home.html',
-                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                                    'indicados': indicados, 'erro': True})
 
             return render(request, 'home.html',
-                          {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                          {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                            'indicados': indicados, 'erro': True})
 
         if request.POST.get('estado', 'estado_vazio') != 'estado_vazio':
@@ -161,16 +169,16 @@ def index(request):
                         cidades.append(i['name'])
 
                     return render(request, 'home.html',
-                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                                    'indicados': indicados, 'cidade': cidades})
 
                 except ConnectionError:
                     return render(request, 'home.html',
-                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                                    'indicados': indicados, 'erro': True})
 
             return render(request, 'home.html',
-                          {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                          {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                            'indicados': indicados, 'erro': True})
 
         if request.POST.get('estado', 'estado_vazio') == 'estado_vazio' and request.POST.get('cidade',
@@ -185,16 +193,16 @@ def index(request):
                         estados.append(i['sigla'])
 
                     return render(request, 'home.html',
-                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                                    'indicados': indicados, 'estado': estados})
 
                 except ConnectionError:
                     return render(request, 'home.html',
-                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                                    'indicados': indicados, 'erro': True})
 
             return render(request, 'home.html',
-                          {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                          {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages,
                            'indicados': indicados, 'erro': True})
 
 

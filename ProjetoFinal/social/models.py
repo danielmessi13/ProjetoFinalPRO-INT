@@ -107,6 +107,9 @@ class Postagem(models.Model):
     texto = models.TextField()
     data = models.DateTimeField(default=timezone.now)
     usuario = models.ForeignKey(Usuario, related_name='usuario_postagem', on_delete=models.CASCADE)
+    compartilhada = models.BooleanField(default=False)
+    data_compartilhada = models.DateTimeField(default=timezone.now)
+    compartilhador = models.ForeignKey(Usuario, related_name='usuario_compartilhador', on_delete=models.CASCADE, null=True)
 
     class Meta:
         ordering = ['-data']
