@@ -1,0 +1,110 @@
+{% load i18n %}
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Raleway');
+    @import url('https://fonts.googleapis.com/css?family=Oswald');
+
+
+    /* =========================
+        GENERAL END
+    ===========================*/
+
+    /* =========================
+        WEATHER START
+    ===========================*/
+    .weather-app {
+        margin: auto;
+        width: 100%;
+        margin-top: 10px;
+        height: 130px;
+        border: 1px solid black;
+        border-radius: 20px;
+        box-shadow: 10px 10px 50px #888888;
+        overflow: hidden;
+        text-align: center;
+    }
+
+
+    .bottom {
+        height: 100px;
+        background: #669999;
+        color: white;
+        font-weight: bold;
+    }
+
+
+</style>
+<aside>
+
+
+    <form action="{% url 'home' %}" method="post">
+        {% csrf_token %}
+
+        {% if estado %}
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans 'Estado' %}</h3>
+            </div>
+            <label for="estado">Estado:</label>
+            <select class="form-control" name="estado">
+                {% for i in estado %}
+                    <option>{{ i }}</option>
+                {% endfor %}
+            </select>
+            <button value="submit" class="btn btn-block btn-info" style="margin-top: 3px">Confirma</button>
+
+        {% elif cidade %}
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans 'Cidade' %}</h3>
+            </div>
+            <label for="cidade">Cidade:</label>
+            <select class="form-control" name="cidade">
+                {% for i in cidade %}
+                    <option>{{ i }}</option>
+                {% endfor %}
+            </select>
+            <button value="submit" class="btn btn-block btn-info" style="margin-top: 3px">Confirma</button>
+
+        {% elif city %}
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ city }}</h3>
+            </div>
+
+            <section id='itroBackground' class="intro">
+                <div class="inner">
+                    <div class="weather-app">
+
+                        <div class="">
+                            <div class="top">
+                                <img id="icon" width="75px"
+                                     src="https://banner2.kisspng.com/20180711/xu/kisspng-tropical-climate-papalotla-de-xicohtncatl-clip-a-clima-5b462f980c7545.189494991531326360051.jpg"
+                                     onerror="this.src='http://openweathermap.org/img/w/11d.png'"/>
+                                <p id="description"></p>
+                            </div>
+                            <div class="bottom">
+                                <div class="humidity">
+
+                                    <span id="humidity">{{ txt }}</span>
+
+                                </div>
+                                <div class="wind">
+                                        <span>Wind: <span id="wind">Máxima: {{ max }}</span> | Minima: {{ min }}<span
+                                                id="direction"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <button value="submit" class="btn btn-block btn-info" style="margin-top: 3px">Redefinir</button>
+
+        {% else %}
+            <div class="panel-heading">
+                <h3 class="panel-title">Clima</h3>
+            </div>
+            <h4><i class="fa fa-bug"></i> Erro de conexão</h4>
+        {% endif %}
+
+    </form>
+
+
+</aside>

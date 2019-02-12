@@ -1,9 +1,11 @@
+import requests
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
+from django.utils.datastructures import MultiValueDictKeyError
 from pytz import unicode
 from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -12,7 +14,7 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.reverse import reverse
-
+from requests.exceptions import ConnectionError
 from social.serializers import PostagemSerializer
 from .forms import *
 from django.db import transaction
@@ -23,20 +25,6 @@ from rest_framework.authtoken.models import Token
 
 
 # Create your views here.
-
-# @api_view(['GET'])
-# @authentication_classes((SessionAuthentication, BasicAuthentication))
-# @permission_classes((IsAuthenticated,))
-# def example_view(request, format=None):
-#     token = Token.objects.get_or_create(user=request.user)
-#     print(token )
-#     content = {
-#         'user': unicode(request.user),  # `django.contrib.auth.User` instance.
-#         'auth': unicode(request.auth),  # None
-#     }
-#     return Response(content)
-
-
 class PostagemList(generics.ListCreateAPIView):
     permission_classes = (IsAdminUser,)
     queryset = Postagem.objects.all()
@@ -57,6 +45,7 @@ def index(request):
     usuario = usuario_logado(request)
     stories = []
     indicados = []
+    estados = []
 
     for amigo in usuario.amigos.all():
         stories.append(amigo.stories_usuario.all())
@@ -75,9 +64,119 @@ def index(request):
     page = request.GET.get('page')
     lista = paginator.get_page(page)
 
-    return render(request, 'home.html',
-                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
-                   'indicados': indicados})
+    if request.method == 'GET':
+
+        if requests.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados').status_code == 200:
+
+            try:
+                api_estados = requests.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados').json()
+
+                for i in api_estados:
+                    estados.append(i['sigla'])
+
+                return render(request, 'home.html',
+                              {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                               'indicados': indicados, 'estado': estados})
+
+            except ConnectionError:
+                return render(request, 'home.html',
+                              {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                               'indicados': indicados, 'erro': True})
+
+        return render(request, 'home.html',
+                      {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                       'indicados': indicados, 'erro': True})
+
+    if request.method == 'POST':
+
+        if request.POST.get('cidade', 'vazia') != 'vazia':
+            if requests.get(
+                    'http://apiadvisor.climatempo.com.br/api/v1/locale/city?name=' + request.POST[
+                        'cidade'] + '&token=2a691966e8904c5a99c6e582564ee847').status_code == 200:
+
+                try:
+
+                    id_cidade = ''
+                    api_tempo = requests.get(
+                        'http://apiadvisor.climatempo.com.br/api/v1/locale/city?name=' + request.POST[
+                            'cidade'] + '&token=2a691966e8904c5a99c6e582564ee847').json()
+
+                    for i in api_tempo:
+                        id_cidade = i['id']
+
+                    print(id_cidade)
+
+                    api_clima = requests.get('http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/' + str(
+                        id_cidade) + '/days/15?token=2a691966e8904c5a99c6e582564ee847').json()
+
+                    min = api_clima['data'][0]['temperature']['min']
+                    max = api_clima['data'][0]['temperature']['max']
+                    txt = api_clima['data'][0]['text_icon']['text']['pt']
+
+                    return render(request, 'home.html',
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                   'indicados': indicados, 'min': min, 'max': max, 'txt': txt,
+                                   'city': request.POST['cidade']})
+
+                except ConnectionError:
+                    return render(request, 'home.html',
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                   'indicados': indicados, 'erro': True})
+
+            return render(request, 'home.html',
+                          {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                           'indicados': indicados, 'erro': True})
+
+        if request.POST.get('estado', 'estado_vazio') != 'estado_vazio':
+            if requests.get('http://apiadvisor.climatempo.com.br/api/v1/locale/city?state=' + request.POST[
+                'estado'] + '&token=2a691966e8904c5a99c6e582564ee847').status_code == 200:
+                try:
+                    cidades = []
+
+                    print(request.POST['estado'])
+
+                    api_cidades = requests.get(
+                        'http://apiadvisor.climatempo.com.br/api/v1/locale/city?state=' + request.POST[
+                            'estado'] + '&token=2a691966e8904c5a99c6e582564ee847').json()
+                    for i in api_cidades:
+                        cidades.append(i['name'])
+
+                    return render(request, 'home.html',
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                   'indicados': indicados, 'cidade': cidades})
+
+                except ConnectionError:
+                    return render(request, 'home.html',
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                   'indicados': indicados, 'erro': True})
+
+            return render(request, 'home.html',
+                          {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                           'indicados': indicados, 'erro': True})
+
+        if request.POST.get('estado', 'estado_vazio') == 'estado_vazio' and request.POST.get('cidade',
+                                                                                             'vazia') == 'vazia':
+
+            if requests.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados').status_code == 200:
+
+                try:
+                    api_estados = requests.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados').json()
+
+                    for i in api_estados:
+                        estados.append(i['sigla'])
+
+                    return render(request, 'home.html',
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                   'indicados': indicados, 'estado': estados})
+
+                except ConnectionError:
+                    return render(request, 'home.html',
+                                  {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                                   'indicados': indicados, 'erro': True})
+
+            return render(request, 'home.html',
+                          {'lista': lista, 'usuario': usuario, 'pages': paginator.num_pages, 'stories': stories,
+                           'indicados': indicados, 'erro': True})
 
 
 @login_required
