@@ -119,7 +119,7 @@
         {#                Ta no perfil de um amigo #}
         {% if amigo or request.user.is_superuser %}
 
-            {% if postagem.usuario.id  == usuario.id %}
+            {% if postagem.usuario.id  == usuario.id and not postagem.compartilhada %}
                 <div class="box box-widget">
                     <div class="box-header with-border">
                         <div class="user-block">
