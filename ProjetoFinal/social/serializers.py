@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from social.models import Postagem
+from social.models import Usuario
 
 
 class PostagemSerializer(serializers.HyperlinkedModelSerializer):
@@ -8,10 +9,7 @@ class PostagemSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'texto', 'data')
 
 
-from social.models import Usuario
-
-
 class UsuarioSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Usuario
-        fields = ('nome', 'telefone', 'sexo')
+        fields = ('url', 'nome', 'telefone', 'sexo')

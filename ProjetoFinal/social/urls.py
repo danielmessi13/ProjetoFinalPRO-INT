@@ -35,6 +35,8 @@ urlpatterns = [
     path('logout/', v.LogoutView.as_view(template_name='login.html'), name='logout'),
     path('postagens/', PostagemList.as_view(), name=PostagemList.name),
     path('postagens/<int:pk>', PostagemDetail.as_view(), name=PostagemDetail.name),
+    path('users/', UserList.as_view(), name=UserList.name),
+    path('users/<int:pk>', UserDetail.as_view(), name=UserDetail.name),
     path('password_reset/$', v.PasswordResetView.as_view(template_name='password_reset_form.html'),
          name='password_reset'),
     path('password_reset/done/$', v.PasswordResetDoneView.as_view(template_name='password_reset_done.html'),

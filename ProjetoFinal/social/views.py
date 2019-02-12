@@ -15,7 +15,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.reverse import reverse
 from requests.exceptions import ConnectionError
-from social.serializers import PostagemSerializer
+from social.serializers import PostagemSerializer, UsuarioSerializer
 from .forms import *
 from django.db import transaction
 import time
@@ -37,6 +37,20 @@ class PostagemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Postagem.objects.all()
     serializer_class = PostagemSerializer
     name = 'postagem-detail'
+
+
+class UserList(generics.ListCreateAPIView):
+    permission_classes = (IsAdminUser,)
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+    name = 'usuario-list'
+
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAdminUser,)
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+    name = 'usuario-detail'
 
 
 @login_required
